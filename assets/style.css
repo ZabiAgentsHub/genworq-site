@@ -36,7 +36,7 @@ html[data-lang="de"] .en{display:none!important}
 .kicker{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--kicker)}
 .kicker.center{text-align:center}
 .kicker.muted{color:#527085}
-.kicker.on-dark{color:#69E6EF}
+.kicker.on-dark{color:#8FEFF6}
 .sec-head{display:flex;flex-direction:column;gap:14px;max-width:760px;margin:0 auto 40px;text-align:center;align-items:center}
 .sec-head.left{margin:0 0 36px;text-align:left;align-items:flex-start;max-width:860px}
 .sec-head h2,.copy h2,.final h2{font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;line-height:1.1}
@@ -119,7 +119,7 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .band-1{padding-top:24vh}
 .band-1::before{background:radial-gradient(ellipse 60% 56% at 22% 44%,rgba(5,10,16,.9) 0%,rgba(5,10,16,.66) 46%,rgba(5,10,16,0) 80%)}
 .band-1 h1{font-size:clamp(2.4rem,5.4vw,4.6rem);max-width:min(12ch,46vw);margin:18px 0 0;color:#F7FBFF;letter-spacing:-.045em;line-height:1.03}
-.eyebrow{color:#69E6EF;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.eyebrow{color:#B6F4FA;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;text-shadow:0 1px 2px rgba(3,10,18,.95),0 2px 10px rgba(3,10,18,.8)}
 .cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);color:#AFC1D4;font-size:12px;letter-spacing:.1em;opacity:0;transition:opacity .8s;text-transform:uppercase}
 .stage.video-ready .cue{opacity:.8}
 .band .line{font-weight:600;font-size:clamp(1.5rem,3.2vw,2.6rem);line-height:1.2;max-width:min(20ch,44vw);letter-spacing:-.02em;color:#F7FBFF}
@@ -173,7 +173,7 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
   .settle h2{font-size:clamp(1.9rem,8.6vw,2.6rem)}
   .settle .sub{margin-top:28px;font-size:1rem}
   .settle::before{background:radial-gradient(ellipse 130% 60% at 50% 30%,rgba(5,10,16,.78) 0%,rgba(5,10,16,.5) 50%,rgba(5,10,16,0) 82%)}
-  .eyebrow{font-size:12px;letter-spacing:.14em}
+  .eyebrow{font-size:13px;letter-spacing:.14em;color:#C6F7FB}
 }
 
 /* ============ PAGE ============ */
@@ -406,10 +406,10 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 .morelink{color:#96D6FF;font-weight:600;font-size:15px;margin-top:8px;display:inline-block}
 .psec.light .morelink{color:#168BB6}
 .stages{display:flex;flex-direction:column;gap:22px;margin-top:6px}
-.stage{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--border)}
-.stage h3{font-size:20px;color:var(--ink-2)}
-.stage p{color:var(--muted);font-size:15px;line-height:1.7}
-@media (max-width:760px){.stage{grid-template-columns:1fr}}
+.stages .stage{display:grid;grid-template-columns:160px 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--border)}
+.stages .stage h3{font-size:20px;color:var(--ink-2)}
+.stages .stage p{color:var(--muted);font-size:15px;line-height:1.7}
+@media (max-width:760px){.stages .stage{grid-template-columns:1fr}}
 /* capability rows */
 .caprows{display:flex;flex-direction:column;gap:16px;margin-top:10px}
 .caprow{display:grid;grid-template-columns:1.1fr 1.4fr;gap:32px;background:#fff;border:1px solid rgba(211,229,238,.7);border-radius:18px;padding:30px 32px;box-shadow:0 18px 44px -32px rgba(9,47,74,.2)}
@@ -544,7 +544,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 /* 1. Display: headings + wordmark + large metric numbers. Tracking normalised to -.01em (earlier values were tuned for Tektur). */
 h1,h2,h3,
 .sec-head h2,.copy h2,.final h2,.band-1 h1,.static-hero h1,.settle h2,.cap h3,.loop h3,.tcard h3,.ccard h3,
-.phero h1,.psec h2,.items h3,.stage h3,.caprow h3,.sol-card h3,.dcard h3,.step h3,.ppanel h2,.ctab h2,.cta-band__content h2{
+.phero h1,.psec h2,.items h3,.stages .stage h3,.caprow h3,.sol-card h3,.dcard h3,.step h3,.ppanel h2,.ctab h2,.cta-band__content h2{
   font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
 h1,.band-1 h1,.static-hero h1,.phero h1{line-height:1.0}
 h2,.sec-head h2,.copy h2,.final h2,.settle h2,.psec h2,.ppanel h2,.ctab h2,.cta-band__content h2{line-height:1.02}
@@ -566,7 +566,7 @@ h4{font-family:var(--font-body);font-weight:600}
 .kicker,.eyebrow,.calc-label,.caprow .tag,.phero .badge,.lad-live,.lad-board,.node .nl,.crow small,.step .badge-row span,.cue,.chev{
   font-family:var(--font-mono);font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
 .lad-board{text-transform:none;letter-spacing:.12em} /* "GENWORQ / OPERATIONS" board title is already caps */
-.stage p.eyebrow,.static-hero p.eyebrow{font-size:12px} /* hero eyebrow: beat the subpage ".stage p" collision */
+.static-hero p.eyebrow{font-size:12px}
 b,strong{font-weight:600} /* browser default 700 isn't loaded for Plex */
 .tt,.lad-clock,.chan,.msg.note,.msg.pill,.calc-minmax,.ftag,.vis .t,.step .badge-row i,.stack-list li .mk{font-family:var(--font-mono)}
 .tt,.lad-clock,.chan,.msg.note,.msg.pill,.step .badge-row i,.stack-list li .mk{font-weight:500}
@@ -576,3 +576,14 @@ b,strong{font-weight:600} /* browser default 700 isn't loaded for Plex */
 .step .badge-row i{font-size:14px}
 .stack-list li .mk{font-size:12px}
 code,pre,kbd,samp,.mono,.index-num,.footer-meta{font-family:var(--font-mono)}
+
+/* home FAQ */
+.page .faq{padding:96px 0;background:var(--canvas)}
+.page .faq .wrap{gap:18px}
+.page .faq h2{font-size:clamp(28px,3.4vw,40px);max-width:26ch}
+.page .faq summary{font-family:var(--font-body);font-weight:600}
+
+/* hero eyebrow: larger on phones (after the type-system block so it wins) */
+@media (max-width:720px){.band .eyebrow,.static-hero .eyebrow{font-size:13px;letter-spacing:.14em}}
+/* band scrim (::before) must paint under ALL caption text, not just transformed words */
+.band{isolation:isolate}.band::before{z-index:-1}
