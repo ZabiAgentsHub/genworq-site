@@ -8,7 +8,7 @@
 - Typical first process goes live in two to four weeks. GDPR-compliant by design (EU data residency, consent controls, role-based access).
 
 ## Pages
-- [Home](https://zabiagentshub.github.io/genworq-site/): overview, live demo, savings calculator, contact.
+- [Home](https://zabiagentshub.github.io/genworq-site/): overview, the range of AI agents (voice, chat, workflow, multi-agent orchestration, omnichannel), live demo, savings calculator, FAQ, contact.
 - [Platform](https://zabiagentshub.github.io/genworq-site/platform.html): the coordination layer, six capabilities (orchestration, dialog engine, integrations, human-in-the-loop, live dashboard, GDPR), governance.
 - [The Orchestrator](https://zabiagentshub.github.io/genworq-site/platform/orchestrator.html): how work is triggered, understood, decided, acted on and logged.
 - [Solutions](https://zabiagentshub.github.io/genworq-site/solutions.html): the five agentic AI solutions.
