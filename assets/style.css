@@ -460,14 +460,23 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 .final.cta-band{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;justify-content:center;padding:96px 24px;isolation:isolate;background:#080C12}
 .cta-band__img{position:absolute;inset:0;background-image:url("genworq-android.png");background-size:cover;background-position:right center;transform:scale(1.05);transition:transform .6s ease;z-index:-2}
 .cta-band__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,18,.88) 0%,rgba(8,12,18,.72) 45%,rgba(8,12,18,.25) 100%);z-index:-1}
-.cta-band__content{max-width:760px;text-align:center;color:#F3F6FA;display:flex;flex-direction:column;align-items:center;gap:22px;opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
-.cta-band__content.is-visible{opacity:1;transform:none}
+.cta-band__content{max-width:760px;text-align:center;color:#F3F6FA;display:flex;flex-direction:column;align-items:center;gap:22px;transition:opacity .8s ease,transform .8s ease}
 .cta-band__content h2{color:#F7FBFF;max-width:18ch;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;line-height:1.1}
 .cta-band__content .lead{color:#C9D6E2;max-width:52ch}
 .final.cta-band:hover .cta-band__img{transform:scale(1.1)}
 @media (max-width:600px){.final.cta-band{min-height:440px;padding:72px 20px}.cta-band__scrim{background:linear-gradient(90deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.82) 60%,rgba(8,12,18,.55) 100%)}}
-@media (prefers-reduced-motion:reduce){.cta-band__content{opacity:1;transform:none;transition:none}.cta-band__img{transition:none}.final.cta-band:hover .cta-band__img{transform:scale(1.05)}}
+@media (prefers-reduced-motion:reduce){.cta-band__img{transition:none}.final.cta-band:hover .cta-band__img{transform:scale(1.05)}}
 .cta-band__img{inset:0;background-position:right center}@media (max-width:600px){.cta-band__img{background-position:72% center}}
 
 .cta-band__img{background-color:#0A1317;background-size:auto 112%;background-position:right center;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%)}@media (max-width:900px){.cta-band__img{background-size:cover;background-position:70% center}}
 .cta-band__img{background-repeat:no-repeat}
+/* CTA band reveal: hidden state exists only after JS adds .reveal-ready, so no-JS stays visible */
+.cta-band.reveal-ready .cta-band__content{opacity:0;transform:translateY(34px)}
+.cta-band.reveal-ready.is-visible .cta-band__content{opacity:1;transform:none}
+.cta-band.reveal-ready .cta-band__content>*{transition:opacity .7s ease,transform .7s ease;opacity:0;transform:translateY(24px)}
+.cta-band.reveal-ready.is-visible .cta-band__content>*{opacity:1;transform:none}
+.cta-band.reveal-ready.is-visible .cta-band__content>*:nth-child(1){transition-delay:.05s}
+.cta-band.reveal-ready.is-visible .cta-band__content>*:nth-child(2){transition-delay:.13s}
+.cta-band.reveal-ready.is-visible .cta-band__content>*:nth-child(3){transition-delay:.21s}
+.cta-band.reveal-ready.is-visible .cta-band__content>*:nth-child(4){transition-delay:.29s}
+@media (prefers-reduced-motion:reduce){.cta-band.reveal-ready .cta-band__content,.cta-band.reveal-ready .cta-band__content>*{opacity:1!important;transform:none!important;transition:none}}

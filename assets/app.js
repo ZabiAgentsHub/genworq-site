@@ -232,12 +232,16 @@ setLang(lang);
   new IntersectionObserver(([e]) => { on = e.isIntersecting && !RM.matches; if (on && raf === null) raf = requestAnimationFrame(loop); }, { threshold: 0 }).observe(vp);
 })();
 
-/* ---------- CTA band: reveal when the section enters the viewport ---------- */
-(() => {
-  const band = $('#cta-band'), content = $('#cta-band-content'); if (!band || !content) return;
-  if (RM.matches) { content.classList.add('is-visible'); return; }
-  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { content.classList.add('is-visible'); obs.unobserve(e.target); } }); }, { threshold: 0.3 });
-  obs.observe(band);
+/* ---------- CTA band: reveal on first entry; hidden state is JS-applied so no-JS stays visible ---------- */
+(function () {
+  const band = document.querySelector('.cta-band');
+  if (!band) return;
+  if (RM.matches) return;                       // reduced motion: never hide, never animate
+  band.classList.add('reveal-ready');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { band.classList.add('is-visible'); io.disconnect(); } });
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+  io.observe(band);
 })();
 /* ---------- form: mailto ---------- */
 const form = $('#form');
