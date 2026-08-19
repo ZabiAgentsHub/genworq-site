@@ -58,11 +58,13 @@ function splitSpan(span, mode, seed) {
   });
   span.textContent = ''; span.appendChild(sr); span.appendChild(vis);
 }
-$$('.hero .split').forEach((el, i) => { const ent = el.closest('.band').dataset.ent; const mode = ent.startsWith('drift') ? 'chars' : 'words'; $$(':scope > .de, :scope > .en', el).forEach((s, j) => splitSpan(s, mode, 1000 + i * 10 + j)); });
+$$('.hero .split').forEach((el, i) => { const ent = el.closest('.band').dataset.ent; const mode = 'words'; $$(':scope > .de, :scope > .en', el).forEach((s, j) => splitSpan(s, mode, 1000 + i * 10 + j)); });
 
 /* ---------- hero scrub ---------- */
 const hero = $('#hero'), stage = $('#stage'), video = $('#hero-video'), poster = $('#poster'), ring = $('.ring');
-const VIDEO_URL = 'assets/hero-scrub.mp4', VIDEO_BYTES = 6614536;
+/* all-intra encodes (every frame a keyframe) so scroll seeks land instantly; phones get the 960px cut */
+const SMALL = matchMedia('(max-width: 720px)').matches;
+const VIDEO_URL = SMALL ? 'assets/hero-scrub-m.mp4' : 'assets/hero-scrub.mp4', VIDEO_BYTES = SMALL ? 2320657 : 7718298;
 const bands = $$('.band').map(b => ({ el: b, a: +b.dataset.a, b: +b.dataset.b, op: -1, k: -1, ramp: b.dataset.ramp ? +b.dataset.ramp : null }));
 function heroProgress() { const range = hero.offsetHeight - innerHeight; return range > 0 ? clamp(-hero.getBoundingClientRect().top / range, 0, 1) : 0; }
 let seekBusy = false, pendingTime = null;

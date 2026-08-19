@@ -98,7 +98,7 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .hero{position:relative;height:560vh;z-index:1;background:#0B1620}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#081019}
 .poster,#hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background-size:cover;background-position:center}
-#hero-video{opacity:0;transition:opacity .8s var(--ease);will-change:transform;transform:translateZ(0)}
+#hero-video{opacity:0;transition:opacity .8s var(--ease);will-change:transform,opacity;transform:translateZ(0);contain:strict}
 .stage.video-ready #hero-video{opacity:1}
 .stage.video-failed #hero-video{display:none}
 .scrim{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 45%,rgba(5,10,16,0) 40%,rgba(5,10,16,.5) 100%)}
@@ -126,11 +126,12 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .settle .sub{font-size:clamp(1rem,1.4vw,1.12rem);color:#C9DBEA;max-width:60ch;margin:40px 0 0;opacity:var(--ks,0);transform:translateY(calc((1 - var(--ks,0))*12px))}
 .settle .cta-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px;opacity:var(--kb,0);transform:translateY(calc((1 - var(--kb,0))*12px))}
 .split .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.w{display:inline-block;white-space:nowrap}
+.w{display:inline-block;white-space:nowrap;will-change:transform,opacity;backface-visibility:hidden}
 .c{display:inline-block}
-[data-ent="rise"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*22px))}
-[data-ent="drift-l"] .c{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.6,1);opacity:var(--kc);transform:translateX(calc((1 - var(--kc))*var(--jx,-14px)))}
-[data-ent="settle"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);opacity:var(--kc);transform:translateY(calc((1 - var(--kc))*18px)) scale(calc(.96 + .04*var(--kc)))}
+/* entrances are word-level (character scatter read as broken mid-animation); eased via --kc so motion decelerates into place */
+[data-ent="rise"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);--ke:calc(var(--kc)*(2 - var(--kc)));opacity:var(--ke);transform:translate3d(0,calc((1 - var(--ke))*22px),0)}
+[data-ent="drift-l"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);--ke:calc(var(--kc)*(2 - var(--kc)));opacity:var(--ke);transform:translate3d(calc((1 - var(--ke))*-18px),0,0)}
+[data-ent="settle"] .w{--kc:clamp(0,(var(--k,0) - var(--th,0))*3,1);--ke:calc(var(--kc)*(2 - var(--kc)));opacity:var(--ke);transform:translate3d(0,calc((1 - var(--ke))*18px),0) scale(calc(.96 + .04*var(--ke)))}
 [data-ent="settle"]{--ks:clamp(0,(var(--k,0) - .62)*4,1);--kb:clamp(0,(var(--k,0) - .76)*5,1)}
 .static-hero{display:none;position:absolute;inset:0;padding:120px var(--pad) 60px;flex-direction:column;justify-content:flex-start;gap:16px;text-align:left;text-shadow:var(--tshadow);background:linear-gradient(180deg,rgba(5,10,16,.6),rgba(5,10,16,.2) 55%,rgba(5,10,16,.45))}
 .static-hero h1{font-size:clamp(2.2rem,9vw,3.4rem);max-width:12ch;color:#F7FBFF}
