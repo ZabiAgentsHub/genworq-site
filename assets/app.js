@@ -67,25 +67,30 @@ const SMALL = matchMedia('(max-width: 720px)').matches;
 const VIDEO_URL = SMALL ? 'assets/hero-scrub-m.mp4' : 'assets/hero-scrub.mp4', VIDEO_BYTES = SMALL ? 2320657 : 7718298;
 /* phones: draw a pre-extracted frame sequence to a canvas in the same rAF as the captions (no video seek latency -> frame and text stay locked) */
 const FRAMES_MODE = SMALL, FRAME_N = 73, FRAME_URL = i => 'assets/frames/f' + String(i + 1).padStart(3, '0') + '.webp';
-const frames = new Array(FRAME_N).fill(null); let framesLoaded = 0, framesReady = false, canvas = null, ctx = null, lastFrame = -1, cw = 0, ch = 0;
+const frames = new Array(FRAME_N).fill(null); let framesLoaded = 0, framesReady = false, canvas = null, ctx = null, lastFrame = -1, cw = 0, ch = 0, anyFrame = false;
+function nearestLoaded(i) { if (frames[i]) return frames[i]; for (let d = 1; d < FRAME_N; d++) { if (frames[i - d]) return frames[i - d]; if (frames[i + d]) return frames[i + d]; } return null; }
 function drawFrame(i) {
-  if (!framesReady || !ctx) return; i = clamp(Math.round(i), 0, FRAME_N - 1);
-  let img = frames[i]; if (!img) { for (let d = 1; d < FRAME_N && !img; d++) img = frames[i - d] || frames[i + d]; if (!img) return; }
-  if (i === lastFrame) return; lastFrame = i;
-  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height; const s = Math.max(cw / iw, ch / ih); const sw = cw / s, sh = ch / s;
+  if (!ctx || !anyFrame) return; i = clamp(Math.round(i), 0, FRAME_N - 1);
+  const img = nearestLoaded(i); if (!img) return;
+  const key = frames[i] ? i : -(i + 1000); // redraw when the exact frame arrives later
+  if (key === lastFrame) return; lastFrame = key;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height; const sc = Math.max(cw / iw, ch / ih); const sw = cw / sc, sh = ch / sc;
   ctx.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, 0, 0, cw, ch);
 }
 function sizeCanvas() { if (!canvas) return; const dpr = Math.min(devicePixelRatio || 1, 1.5); const r = stage.getBoundingClientRect(); cw = Math.round(r.width * dpr); ch = Math.round(r.height * dpr); canvas.width = cw; canvas.height = ch; lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); }
+/* progressive, nearest-first: frames closest to the current scroll position download first, and the canvas shows as soon as one frame exists */
 function loadFrames() {
   canvas = document.createElement('canvas'); canvas.id = 'hero-canvas'; canvas.setAttribute('aria-hidden', 'true'); video.after(canvas); ctx = canvas.getContext('2d', { alpha: false }); sizeCanvas();
   addEventListener('resize', sizeCanvas); addEventListener('orientationchange', () => setTimeout(sizeCanvas, 300));
-  let next = 0, done = 0, failed = 0; const CONC = 6;
-  const worker = () => { if (next >= FRAME_N) return; const i = next++; const img = new Image(); img.decoding = 'async';
-    img.onload = () => { frames[i] = img; done++; framesLoaded = done; ring.style.setProperty('--ld', Math.round(126 * (1 - done / FRAME_N))); if (done + failed === FRAME_N) finish(); else worker(); };
-    img.onerror = () => { failed++; if (failed > FRAME_N * 0.15) failVideo(); else if (done + failed === FRAME_N) finish(); else worker(); };
-    img.src = FRAME_URL(i); };
+  const pending = new Set(); for (let i = 0; i < FRAME_N; i++) pending.add(i);
+  let done = 0, failed = 0, inflight = 0; const CONC = 6;
+  const pick = () => { const cur = Math.round(shown * (FRAME_N - 1)); let best = -1, bd = 1e9; for (const i of pending) { const d = Math.abs(i - cur); if (d < bd) { bd = d; best = i; } } return best; };
+  const pump = () => { while (inflight < CONC && pending.size) { const i = pick(); pending.delete(i); inflight++; const img = new Image(); img.decoding = 'async';
+    img.onload = () => { frames[i] = img; done++; inflight--; framesLoaded = done; if (!anyFrame) { anyFrame = true; stage.classList.add('video-ready', 'frames'); } lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); ring.style.setProperty('--ld', Math.round(126 * (1 - done / FRAME_N))); if (done + failed === FRAME_N) finish(); else pump(); };
+    img.onerror = () => { failed++; inflight--; if (failed > FRAME_N * 0.15) failVideo(); else if (done + failed === FRAME_N) finish(); else pump(); };
+    img.src = FRAME_URL(i); } };
   const finish = () => { if (framesReady) return; framesReady = true; ring.style.setProperty('--ld', 0); lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); stage.classList.add('video-ready', 'frames'); };
-  for (let c = 0; c < CONC; c++) worker();
+  pump();
 }
 const bands = $$('.band').map(b => ({ el: b, a: +b.dataset.a, b: +b.dataset.b, op: -1, k: -1, ramp: b.dataset.ramp ? +b.dataset.ramp : null }));
 function heroProgress() { const range = hero.offsetHeight - stage.offsetHeight; return range > 0 ? clamp(-hero.getBoundingClientRect().top / range, 0, 1) : 0; }
@@ -106,11 +111,11 @@ function updateCaptions(p) {
     if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) { B.k = k; B.el.style.setProperty('--k', k.toFixed(3)); }
   }
 }
-function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart - 450) / 2600, 0, 1); loadK = t * t * (3 - 2 * t); updateCaptions(shown); if (t < 1) requestAnimationFrame(loadRamp); }
+function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart - (SMALL ? 150 : 450)) / (SMALL ? 900 : 2600), 0, 1); loadK = t * t * (3 - 2 * t); updateCaptions(shown); if (t < 1) requestAnimationFrame(loadRamp); }
 let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
 function tick(now) {
   const dt = Math.min(100, now - (lastTick || now)); lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.075 : 0.16), dt / 16.667));
+  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.4 : 0.16), dt / 16.667));
   if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; } else rafId = requestAnimationFrame(tick);
   if (FRAMES_MODE) drawFrame(shown * (FRAME_N - 1)); else requestSeek(shown * video.duration);
   updateCaptions(shown);
@@ -120,9 +125,9 @@ new IntersectionObserver(([e]) => { heroOnScreen = e.isIntersecting; if (heroOnS
 let heroInit = false, started = false, blobUrl = null;
 function initHeroOnce() {
   if (heroInit) return; heroInit = true;
-  poster.style.backgroundImage = "url('assets/hero-poster.jpg')";
-  const img = new Image(); img.onload = startBlobFetch; img.onerror = startBlobFetch; img.src = 'assets/hero-poster.jpg';
-  setTimeout(startBlobFetch, 4000); requestAnimationFrame(loadRamp);
+  if (!FRAMES_MODE) poster.style.backgroundImage = "url('assets/hero-poster.jpg')";
+  if (FRAMES_MODE) startBlobFetch(); else { const img = new Image(); img.onload = startBlobFetch; img.onerror = startBlobFetch; img.src = 'assets/hero-poster.jpg'; setTimeout(startBlobFetch, 4000); }
+  requestAnimationFrame(loadRamp);
 }
 function startBlobFetch() { if (started) return; started = true; if (FRAMES_MODE) loadFrames(); else loadHeroBlob().catch(failVideo); }
 async function loadHeroBlob() {
@@ -283,6 +288,9 @@ setLang(lang);
 (function () {
   const band = document.querySelector('.cta-band');
   if (!band) return;
+  /* attach the background image only when the band is within ~900px of the viewport */
+  const imgIO = new IntersectionObserver((es) => { if (es.some(e => e.isIntersecting)) { const im = new Image(); im.onload = () => band.classList.add('img-ready'); im.onerror = () => band.classList.add('img-ready'); im.src = 'assets/genworq-android.webp'; imgIO.disconnect(); } }, { rootMargin: '900px 0px' });
+  imgIO.observe(band);
   if (RM.matches) return;                       // reduced motion: never hide, never animate
   band.classList.add('reveal-ready');
   const io = new IntersectionObserver((entries) => {

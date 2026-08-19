@@ -140,9 +140,9 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 /* phones: no per-word blur (expensive), lighter shadow, contain paint work to the band */
 @media (max-width:720px){
   .w{--spd:1.7} /* each word takes ~60% of the ramp: slower, more overlap */
-  [data-ent="rise"] .w,[data-ent="drift-l"] .w{filter:blur(calc((1 - var(--ke))*4px))}
-  [data-ent="settle"] .w{filter:blur(calc((1 - var(--ke))*3px))}
-  .band{text-shadow:0 1px 2px rgba(3,10,16,.9),0 4px 16px rgba(3,10,16,.7);contain:layout paint}
+  [data-ent] .w{filter:none!important} /* phones: opacity + transform only (compositor-cheap); no per-word blur */
+  .band{text-shadow:0 2px 10px rgba(3,10,16,.85);contain:layout paint}
+  .w{will-change:transform,opacity}
 }
 [data-ent="settle"]{--ks:clamp(0,(var(--k,0) - .62)*4,1);--kb:clamp(0,(var(--k,0) - .76)*5,1)}
 .static-hero{display:none;position:absolute;inset:0;padding:120px var(--pad) 60px;flex-direction:column;justify-content:flex-start;gap:16px;text-align:left;text-shadow:var(--tshadow);background:linear-gradient(180deg,rgba(5,10,16,.6),rgba(5,10,16,.2) 55%,rgba(5,10,16,.45))}
@@ -499,7 +499,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 
 /* ================= CTA BAND: image background + scroll reveal ================= */
 .final.cta-band{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;justify-content:center;padding:96px 24px;isolation:isolate;background:#080C12}
-.cta-band__img{position:absolute;inset:0;background-image:url("genworq-android.png");background-size:cover;background-position:right center;transform:scale(1.05);transition:transform .6s ease;z-index:-2}
+.cta-band__img{position:absolute;inset:0;background-size:cover;background-position:right center;transform:scale(1.05);transition:transform .6s ease;z-index:-2}
 .cta-band__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,18,.88) 0%,rgba(8,12,18,.72) 45%,rgba(8,12,18,.25) 100%);z-index:-1}
 .cta-band__content{max-width:760px;text-align:center;color:#F3F6FA;display:flex;flex-direction:column;align-items:center;gap:22px;transition:opacity .8s ease,transform .8s ease}
 .cta-band__content h2{color:#F7FBFF;max-width:18ch;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.04em;line-height:1.1}
@@ -511,6 +511,8 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 
 .cta-band__img{background-color:#0A1317;background-size:auto 112%;background-position:right center;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%)}@media (max-width:900px){.cta-band__img{background-size:cover;background-position:70% center}}
 .cta-band__img{background-repeat:no-repeat}
+/* image is attached by JS when the band approaches the viewport (saves the download on first paint); <noscript> in index.html covers no-JS */
+.cta-band.img-ready .cta-band__img{background-image:url("genworq-android.webp")}
 /* CTA band reveal: hidden state exists only after JS adds .reveal-ready, so no-JS stays visible */
 .cta-band.reveal-ready .cta-band__content{opacity:0;transform:translateY(34px)}
 .cta-band.reveal-ready.is-visible .cta-band__content{opacity:1;transform:none}
