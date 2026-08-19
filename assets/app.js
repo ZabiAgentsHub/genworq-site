@@ -231,6 +231,14 @@ setLang(lang);
   }
   new IntersectionObserver(([e]) => { on = e.isIntersecting && !RM.matches; if (on && raf === null) raf = requestAnimationFrame(loop); }, { threshold: 0 }).observe(vp);
 })();
+
+/* ---------- CTA band: reveal when the section enters the viewport ---------- */
+(() => {
+  const band = $('#cta-band'), content = $('#cta-band-content'); if (!band || !content) return;
+  if (RM.matches) { content.classList.add('is-visible'); return; }
+  const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { content.classList.add('is-visible'); obs.unobserve(e.target); } }); }, { threshold: 0.3 });
+  obs.observe(band);
+})();
 /* ---------- form: mailto ---------- */
 const form = $('#form');
 form.addEventListener('submit', e => {
