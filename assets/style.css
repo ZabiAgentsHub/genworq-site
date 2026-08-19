@@ -2,15 +2,24 @@
 :root{
   --ink:#071523;--ink-2:#0A1F32;--canvas:#F5F9FC;--panel:#FFFFFF;--aqua:#15D4E8;--blue:#2E85FF;--mist:#DFF5F7;--proof:#E9F4F8;--muted:#587084;--muted-2:#405E74;--kicker:#168BB6;--border:#D3E5EE;--border-2:#BFE6EC;--foot:#04101B;
   --grad:linear-gradient(90deg,#14D8E8 0%,#2E85FF 100%);
-  --font:'Tektur',system-ui,sans-serif;
+  /* type system: display (headings/logo/big numbers), body (everything readable), mono (labels/data/meta) */
+  --font-display:'Chakra Petch',system-ui,sans-serif;
+  --font-body:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono','SFMono-Regular',Consolas,monospace;
+  --font:var(--font-body);
   --ease:cubic-bezier(.2,.8,.2,1);--ease-io:cubic-bezier(.65,0,.35,1);
   --tshadow:0 1px 2px rgba(3,10,18,.95),0 3px 12px rgba(3,10,18,.78),0 10px 44px rgba(3,10,18,.8);
   --wrap:1200px;--pad:clamp(20px,5vw,64px);
 }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;overflow-x:hidden;overflow-x:clip;background:var(--canvas)}
-body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body{margin:0;overflow-x:hidden;overflow-x:clip;background:var(--canvas);color:var(--ink);font-family:var(--font-body);font-weight:400;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.1;letter-spacing:-.035em;color:var(--ink-2)}
+/* display face: headings + wordmark only */
+h1,h2,h3,.brand,.fbrand{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+h1{line-height:1.0}h2{line-height:1.02}h3{line-height:1.1}
+/* h4 stays on the body face (Chakra is too heavy at small sizes) */
+h4{font-family:var(--font-body);font-weight:600}
 p{margin:0}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -496,3 +505,40 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 .final.cta-band:hover .cta-band__img{transform:scale(1.1)}
 @media (max-width:900px){.final.cta-band{justify-content:center}.final.cta-band .cta-band__content{margin-left:0;text-align:center;align-items:center}.final.cta-band .cta-band__content h2{max-width:18ch}}
 @media (prefers-reduced-motion:reduce){.cta-band.reveal-ready .cta-band__img{opacity:1!important;transform:scale(1.05)!important;transition:none}}
+
+/* ================= TYPE SYSTEM (Chakra Petch / IBM Plex Sans / JetBrains Mono) ================= */
+/* 1. Display: headings + wordmark + large metric numbers. Tracking normalised to -.01em (earlier values were tuned for Tektur). */
+h1,h2,h3,
+.sec-head h2,.copy h2,.final h2,.band-1 h1,.static-hero h1,.settle h2,.cap h3,.loop h3,.tcard h3,.ccard h3,
+.phero h1,.psec h2,.items h3,.stage h3,.caprow h3,.sol-card h3,.dcard h3,.step h3,.ppanel h2,.ctab h2,.cta-band__content h2{
+  font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+h1,.band-1 h1,.static-hero h1,.phero h1{line-height:1.0}
+h2,.sec-head h2,.copy h2,.final h2,.settle h2,.psec h2,.ppanel h2,.ctab h2,.cta-band__content h2{line-height:1.02}
+h3,.loop h3{line-height:1.1}
+.band .line{font-family:var(--font-display);font-weight:600;letter-spacing:-.01em} /* hero caption lines (3–6 words, headline-scale) */
+.calc-val span,.rv{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em;font-variant-numeric:tabular-nums} /* big metric numbers */
+.brand,.fbrand{font-family:var(--font-display);font-weight:700;letter-spacing:.12em} /* wordmark keeps its wide tracking */
+
+/* 2. Body: everything readable (paragraphs, nav, buttons, forms, cards, chips). Loaded weights: 400/500/600 only. */
+body,p,li,.lead,.btn,.nav-links>a,.dd>button,.dd-panel b,.dd-panel small,.lang,.form label,.form input,.form textarea,
+.chips>span,.chips-dark span,.stack-list li,.tm-item b,.tm-item small,.benefits li,.rl,.calc-note,.ti,.td,.biz,.msg.biz-msg,.msg.cust,
+.points li,.faq summary,.faq .ans,.crow a,.crow b,.caprow .pt b,.caprow .pt span,.step .checks li,.skip,.success{font-family:var(--font-body)}
+.btn{font-weight:600}
+.nav-links>a,.dd>button{font-weight:500}
+.biz,.faq summary,.skip{font-weight:600}
+h4{font-family:var(--font-body);font-weight:600}
+
+/* 3. Mono: kickers / eyebrows, small data labels, index numbers, timestamps, footer meta, SVG diagram labels. Never below 12px. */
+.kicker,.eyebrow,.calc-label,.caprow .tag,.phero .badge,.lad-live,.lad-board,.node .nl,.crow small,.step .badge-row span,.cue,.chev{
+  font-family:var(--font-mono);font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.lad-board{text-transform:none;letter-spacing:.12em} /* "GENWORQ / OPERATIONS" board title is already caps */
+.stage p.eyebrow,.static-hero p.eyebrow{font-size:12px} /* hero eyebrow: beat the subpage ".stage p" collision */
+b,strong{font-weight:600} /* browser default 700 isn't loaded for Plex */
+.tt,.lad-clock,.chan,.msg.note,.msg.pill,.calc-minmax,.ftag,.vis .t,.step .badge-row i,.stack-list li .mk{font-family:var(--font-mono)}
+.tt,.lad-clock,.chan,.msg.note,.msg.pill,.step .badge-row i,.stack-list li .mk{font-weight:500}
+.calc-minmax,.ftag,.vis .t{font-weight:400}
+.tt,.lad-clock,.chan,.msg.note,.msg.pill,.calc-minmax{font-size:12px}
+.ftag{font-size:13px;letter-spacing:.02em}
+.step .badge-row i{font-size:14px}
+.stack-list li .mk{font-size:12px}
+code,pre,kbd,samp,.mono,.index-num,.footer-meta{font-family:var(--font-mono)}
