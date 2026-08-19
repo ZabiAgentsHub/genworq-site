@@ -197,7 +197,7 @@ section{position:relative}
 .stack-list li.hot{box-shadow:0 10px 30px -10px color-mix(in srgb,var(--c) 55%,transparent),0 0 0 1.5px var(--c);color:var(--ink)}
 .stack-list li.hot .mk{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 18%,transparent)}
 .stack-list li.plus{background:transparent;border-style:dashed;color:#315670}
-.stack-list li.plus .mk{background:#E3EEF3;color:#315670;font-weight:700;font-size:16px;line-height:1}.stack-list li.plus .mk::before{display:none}
+.stack-list li.plus .mk{background:#E3EEF3;color:#315670;font-weight:500;font-size:16px;line-height:1}.stack-list li.plus .mk::before{display:none}
 @media (prefers-reduced-motion:reduce){.stack-list{animation:none;flex-wrap:wrap;width:auto;justify-content:center}.stack-list li{--s:1;--o:1}}
 
 /* capabilities */
