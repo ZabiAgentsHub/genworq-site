@@ -1,0 +1,293 @@
+﻿<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genworq | Make work move itself</title>
+<meta name="description" content="Genworq turns manual busywork into a self-running operation: a coordinated crew of AI agents that researches, decides, and executes across your CRM, inbox, and ops stack.">
+<meta name="theme-color" content="#071523">
+<!-- DEPLOY STEP: patch og:url and og:image with the live URL -->
+<meta property="og:title" content="Genworq | Make work move itself">
+<meta property="og:description" content="Agentic AI for ambitious operations. A coordinated crew of AI agents that researches, decides, and executes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://genworq.example/">
+<meta property="og:image" content="https://genworq.example/assets/hero-ending.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23071523'/%3E%3Cpath d='M16 5v22' stroke='%2315D4E8' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M8 12h16M10 20h12' stroke='%232E85FF' stroke-width='1.6' stroke-linecap='round' opacity='.85'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"Genworq","url":"https://genworq.example/","email":"hello@genworq.com","description":"Agentic AI for ambitious operations."}
+</script>
+</head>
+<body>
+<a class="skip" href="#main"><span class="en">Skip to content</span><span class="de">Zum Inhalt springen</span></a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">GENWORQ</a>
+  <nav class="nav-links" id="navlinks" aria-label="Main">
+    <div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true"><span class="en">Products</span><span class="de">Produkte</span> <i>⌄</i></button>
+      <div class="dd-panel"><a href="#leistungen"><b><span class="en">Platform overview</span><span class="de">Plattform-Überblick</span></b><small><span class="en">How the whole system fits together</span><span class="de">Wie das ganze System zusammenpasst</span></small></a><a href="#flow"><b><span class="en">The Orchestrator</span><span class="de">Der Orchestrator</span></b><small><span class="en">The layer that decides who does what</span><span class="de">Die Schicht, die entscheidet, wer was tut</span></small></a></div></div>
+    <div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true"><span class="en">Solutions</span><span class="de">Lösungen</span> <i>⌄</i></button>
+      <div class="dd-panel"><a href="#leistungen"><b><span class="en">Marketing on autopilot</span><span class="de">Marketing auf Autopilot</span></b><small><span class="en">Campaigns, social, follow-ups</span><span class="de">Kampagnen, Social, Follow-ups</span></small></a><a href="#leistungen"><b><span class="en">A sales funnel that works itself</span><span class="de">Ein Vertriebstrichter, der von selbst läuft</span></b><small><span class="en">Scoring, replies, booking</span><span class="de">Scoring, Antworten, Termine</span></small></a><a href="#leistungen"><b><span class="en">AI support agents</span><span class="de">KI-Support-Agenten</span></b><small><span class="en">24/7 answers, smart handover</span><span class="de">24/7 Antworten, kluge Übergabe</span></small></a><a href="#leistungen"><b><span class="en">Back office on autopilot</span><span class="de">Backoffice auf Autopilot</span></b><small><span class="en">Invoicing, reconciliation, reports</span><span class="de">Rechnungen, Abgleich, Berichte</span></small></a><a class="dd-all" href="#leistungen"><span class="en">View all solutions →</span><span class="de">Alle Lösungen ansehen →</span></a></div></div>
+    <a href="#trust"><span class="en">About us</span><span class="de">Über uns</span></a>
+    <a href="#contact"><span class="en">Contact</span><span class="de">Kontakt</span></a>
+  </nav>
+  <div class="nav-right">
+    <button class="lang" id="langbtn" type="button" aria-label="Switch language / Sprache wechseln"><span data-l="en">EN</span><i>/</i><span data-l="de">DE</span></button>
+    <a class="btn btn-aqua btn-sm" href="#contact"><span class="en">Schedule an appointment</span><span class="de">Termin vereinbaren</span></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="navlinks" aria-label="Menu"><span></span><span></span></button>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<span id="top"></span>
+
+<!-- ============ HERO (scroll-scrubbed strands) ============ -->
+<section class="hero" id="hero" aria-label="Intro">
+  <div class="stage" id="stage">
+    <div class="poster" id="poster"></div>
+    <video id="hero-video" preload="none" muted playsinline aria-hidden="true" tabindex="-1"></video>
+    <div class="scrim" aria-hidden="true"></div>
+    <svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126" style="stroke-dashoffset:var(--ld,126)"/></svg>
+
+    <div class="band band-1 band-left" data-a="0" data-b="0.20" data-ent="rise">
+      <p class="eyebrow"><span class="en">Agentic AI for ambitious operations</span><span class="de">Agentische KI für ambitionierte Teams</span></p>
+      <h1 class="split"><span class="en">Make work move itself.</span><span class="de">Arbeit, die sich selbst bewegt.</span></h1>
+      <p class="cue" aria-hidden="true"><span class="en">Scroll</span><span class="de">Scrollen</span> ↓</p>
+    </div>
+
+    <div class="band band-2 band-left" data-a="0.23" data-b="0.47" data-ent="drift-l">
+      <p class="line split"><span class="en">Manual busywork. Every day. Everywhere.</span><span class="de">Handarbeit. Jeden Tag. Überall.</span></p>
+    </div>
+
+    <div class="band band-3 band-left" data-a="0.50" data-b="0.75" data-ent="drift-l">
+      <p class="line split"><span class="en">A crew of agents that researches, decides and executes.</span><span class="de">Eine Crew aus Agenten, die recherchiert, entscheidet und ausführt.</span></p>
+    </div>
+
+    <div class="band band-4 settle" data-a="0.78" data-b="1" data-ent="settle">
+      <h2 class="split"><span class="en">Make work move itself.</span><span class="de">Arbeit, die sich selbst bewegt.</span></h2>
+      <p class="sub"><span class="en">We turn manual busywork into a self-running operation: a coordinated crew of AI agents that researches, decides, and executes across your CRM, inbox, and ops stack. Built for teams scaling faster than they can hire.</span><span class="de">Wir machen aus manueller Routinearbeit einen Betrieb, der von selbst läuft: eine koordinierte Crew aus KI-Agenten, die in CRM, Posteingang und Ops-Stack recherchiert, entscheidet und ausführt. Für Teams, die schneller wachsen, als sie einstellen können.</span></p>
+      <div class="cta-row">
+        <a class="btn btn-grad" href="#contact"><span class="en">Put your agents to work</span><span class="de">Agenten an die Arbeit</span> <i>→</i></a>
+        <a class="btn btn-white" href="#demo"><span class="en">Watch a live demo</span><span class="de">Live-Demo ansehen</span></a>
+      </div>
+    </div>
+
+    <div class="static-hero">
+      <p class="eyebrow"><span class="en">Agentic AI for ambitious operations</span><span class="de">Agentische KI für ambitionierte Teams</span></p>
+      <h1><span class="en">Make work move itself.</span><span class="de">Arbeit, die sich selbst bewegt.</span></h1>
+      <p class="sub"><span class="en">A coordinated crew of AI agents that researches, decides, and executes across your CRM, inbox, and ops stack.</span><span class="de">Eine koordinierte Crew aus KI-Agenten, die in CRM, Posteingang und Ops-Stack recherchiert, entscheidet und ausführt.</span></p>
+      <a class="btn btn-grad" href="#contact"><span class="en">Put your agents to work</span><span class="de">Agenten an die Arbeit</span> <i>→</i></a>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+
+<!-- ============ PROOF STRIP ============ -->
+<section class="proof" aria-label="Works with your stack">
+  <div class="wrap proof-in">
+    <span class="kicker muted"><span class="en">Built for the systems you already run</span><span class="de">Gebaut für die Systeme, die Sie schon nutzen</span></span>
+    <ul class="stack-list"><li>Slack</li><li>HubSpot</li><li>Microsoft 365</li><li>Supabase</li><li>n8n</li><li class="plus"><span class="en">+ your stack</span><span class="de">+ Ihr Stack</span></li></ul>
+  </div>
+</section>
+
+<!-- ============ CAPABILITIES ============ -->
+<section class="caps" id="leistungen">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><span class="en">What Genworq does</span><span class="de">Was Genworq macht</span></span>
+      <h2><span class="en">The busywork runs itself now.</span><span class="de">Die Routinearbeit läuft jetzt von selbst.</span></h2>
+      <p class="lead"><span class="en">Marketing, sales, support, and back office, each handed to a crew of agents that just gets on with it.</span><span class="de">Marketing, Vertrieb, Support und Backoffice, jeweils an eine Crew aus Agenten übergeben, die einfach loslegt.</span></p>
+    </div>
+    <div class="cap-grid">
+      <article class="cap reveal" style="--orb:#2E85FF;--disc:#F2F7FF">
+        <div class="orbit"><span class="sat"></span><span class="disc"><svg viewBox="0 0 24 24"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg></span></div>
+        <h3><span class="en">Marketing on autopilot</span><span class="de">Marketing auf Autopilot</span></h3>
+        <p><span class="en">Agents write your campaigns, send them at the right moment, and chase everyone who opened but never replied. You approve the plan. They do the legwork.</span><span class="de">Agenten schreiben Ihre Kampagnen, senden sie im richtigen Moment und haken bei allen nach, die geöffnet, aber nie geantwortet haben. Sie geben den Plan frei. Sie machen die Arbeit.</span></p>
+        <div class="chips"><span><span class="en">Email campaigns</span><span class="de">E-Mail-Kampagnen</span></span><span><span class="en">Social posts</span><span class="de">Social Posts</span></span><span>Follow-ups</span></div>
+      </article>
+      <article class="cap reveal" style="--orb:#148DB8;--disc:#EFF9FC">
+        <div class="orbit"><span class="sat"></span><span class="disc"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 4 4 5-6"/></svg></span></div>
+        <h3><span class="en">A sales funnel that works itself</span><span class="de">Ein Vertriebstrichter, der von selbst läuft</span></h3>
+        <p><span class="en">Every new lead gets qualified and answered within minutes, day or night. The ready ones land straight in your calendar. The rest stay warm until they are.</span><span class="de">Jeder neue Lead wird innerhalb von Minuten qualifiziert und beantwortet, Tag und Nacht. Die reifen landen direkt in Ihrem Kalender. Die anderen bleiben warm, bis sie es sind.</span></p>
+        <div class="chips"><span><span class="en">Lead scoring</span><span class="de">Lead-Scoring</span></span><span><span class="en">Instant replies</span><span class="de">Sofortantworten</span></span><span><span class="en">Meeting booking</span><span class="de">Terminbuchung</span></span></div>
+      </article>
+      <article class="cap cap-s reveal" style="--orb:#0F9D6E;--disc:#EFFAF5">
+        <div class="orbit"><span class="sat"></span><span class="disc"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span></div>
+        <h3><span class="en">AI support agents</span><span class="de">KI-Support-Agenten</span></h3>
+        <p><span class="en">They handle the routine questions instantly and pass you only what genuinely needs a person.</span><span class="de">Sie beantworten Routinefragen sofort und reichen nur weiter, was wirklich einen Menschen braucht.</span></p>
+        <div class="chips"><span><span class="en">24/7 answers</span><span class="de">24/7 Antworten</span></span><span><span class="en">Smart handover</span><span class="de">Kluge Übergabe</span></span></div>
+      </article>
+      <article class="cap cap-l reveal" style="--orb:#6D5AE6;--disc:#F5F3FF">
+        <div class="orbit"><span class="sat"></span><span class="disc"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 4v16"/></svg></span></div>
+        <h3><span class="en">Back office on autopilot</span><span class="de">Backoffice auf Autopilot</span></h3>
+        <p><span class="en">Invoices matched, expenses filed, and reports sitting in your inbox every Monday, whether anyone remembers to do it or not.</span><span class="de">Rechnungen abgeglichen, Ausgaben verbucht und Berichte jeden Montag im Posteingang, ob jemand daran denkt oder nicht.</span></p>
+        <div class="chips"><span><span class="en">Invoicing</span><span class="de">Rechnungen</span></span><span><span class="en">Reconciliation</span><span class="de">Abgleich</span></span><span><span class="en">Weekly reports</span><span class="de">Wochenberichte</span></span></div>
+      </article>
+
+      <article class="loop reveal" id="flow">
+        <span class="kicker"><span class="en">How it runs</span><span class="de">So läuft es</span></span>
+        <h3><span class="en">Set it up once. It keeps getting better.</span><span class="de">Einmal einrichten. Es wird immer besser.</span></h3>
+        <div class="flow">
+          <div class="flow-row">
+            <div class="node" style="--disc:#F2F7FF"><span class="disc"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></span><span class="nl">Trigger</span></div>
+            <div class="link"><span class="pulse"></span></div>
+            <div class="node" style="--disc:#EFF9FC"><span class="disc"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><span class="nl"><span class="en">Understand</span><span class="de">Verstehen</span></span></div>
+            <div class="link"><span class="pulse"></span></div>
+            <div class="node" style="--disc:#F5F3FF"><span class="disc"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M4 14h16"/></svg></span><span class="nl"><span class="en">Decide</span><span class="de">Entscheiden</span></span></div>
+            <div class="link"><span class="pulse"></span></div>
+            <div class="node" style="--disc:#EFFAF5"><span class="disc"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span class="nl"><span class="en">Act</span><span class="de">Handeln</span></span></div>
+            <div class="link"><span class="pulse"></span></div>
+            <div class="node" style="--disc:#EFF9FC"><span class="disc"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/></svg></span><span class="nl"><span class="en">Improve</span><span class="de">Verbessern</span></span></div>
+          </div>
+          <div class="return"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ IN PRACTICE (ticker) ============ -->
+<section class="practice" aria-label="What it looks like in practice">
+  <span class="kicker center"><span class="en">What it looks like in practice</span><span class="de">So sieht es in der Praxis aus</span></span>
+  <div class="tm-viewport"><div class="tm-track" id="tmtrack"></div></div>
+</section>
+
+<!-- ============ SAVINGS ============ -->
+<section class="savings" id="savings">
+  <div class="wrap two">
+    <div class="copy reveal">
+      <span class="kicker"><span class="en">The cost of staying manual</span><span class="de">Was manuell bleiben kostet</span></span>
+      <h2><span class="en">What is busywork costing you?</span><span class="de">Was kostet Sie die Routinearbeit?</span></h2>
+      <p class="lead"><span class="en">Every team loses a slice of its week to work that could run itself: chasing replies, copying data between tools, building the same report again. Drag the slider to see what that slice is worth.</span><span class="de">Jedes Team verliert einen Teil seiner Woche an Arbeit, die von selbst laufen könnte: Antworten nachjagen, Daten zwischen Tools kopieren, denselben Bericht noch einmal bauen. Ziehen Sie den Regler, um zu sehen, was dieser Teil wert ist.</span></p>
+      <ul class="benefits">
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span class="en">Hours back, every week</span><span class="de">Stunden zurück, jede Woche</span></li>
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span class="en">Payroll spent on real work</span><span class="de">Gehälter für echte Arbeit</span></li>
+        <li><span class="tick"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span><span class="en">Growth without new headcount</span><span class="de">Wachstum ohne neue Stellen</span></li>
+      </ul>
+    </div>
+    <div class="calc reveal" id="calc">
+      <div class="calc-top">
+        <span class="calc-label"><span class="en">People stuck on busywork</span><span class="de">Menschen in Routinearbeit</span></span>
+        <div class="calc-val"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span id="calc-n">20</span></div>
+        <div class="slider" id="calc-track" role="slider" tabindex="0" aria-valuemin="1" aria-valuemax="150" aria-valuenow="20" aria-label="People stuck on busywork"><span class="rail"></span><span class="fill" id="calc-fill"></span><span class="knob" id="calc-knob"></span></div>
+        <div class="calc-minmax"><span>1</span><span>150+</span></div>
+      </div>
+      <div class="calc-res">
+        <div><span class="rl"><span class="en">Saved per year</span><span class="de">Gespart pro Jahr</span></span><span class="rv acc" id="calc-save">€240,000</span></div>
+        <hr>
+        <div><span class="rl"><span class="en">Hours returned to the team</span><span class="de">Stunden zurück ans Team</span></span><span class="rv" id="calc-hours">6,400 h</span></div>
+      </div>
+      <p class="calc-note"><span class="en">Assumes 20% of a 1,600-hour work year goes to repetitive tasks, valued at €37.5/hour.</span><span class="de">Annahme: 20 % eines Arbeitsjahres mit 1.600 Stunden entfallen auf Routineaufgaben, bewertet mit 37,50 €/Stunde.</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LIVE DEMO ============ -->
+<section class="demo" id="demo">
+  <div class="wrap">
+    <div class="sec-head left reveal">
+      <span class="kicker"><span class="en">03 · What it feels like now</span><span class="de">03 · So fühlt es sich jetzt an</span></span>
+      <h2><span class="en">Your leads don’t wait for business hours. Neither does Genworq.</span><span class="de">Ihre Leads warten nicht auf Geschäftszeiten. Genworq auch nicht.</span></h2>
+      <p class="lead"><span class="en">A lead lands at 9:14 PM. Genworq qualifies it, answers, and books the meeting, four hours after your team logged off.</span><span class="de">Um 21:14 Uhr kommt ein Lead herein. Genworq qualifiziert ihn, antwortet und bucht den Termin, vier Stunden nachdem Ihr Team Feierabend gemacht hat.</span></p>
+    </div>
+    <div class="band-dark reveal" id="lad">
+      <div class="lad-head"><span class="lad-board">GENWORQ / OPERATIONS</span><span class="lad-live"><i></i><span class="en">Running after hours</span><span class="de">Läuft nach Feierabend</span></span></div>
+      <div class="lad-grid">
+        <div class="lad-left">
+          <ol class="lad-tl" id="lad-tl">
+            <li><div class="mk"><span class="dot"></span><span class="seg"><span class="segfill"></span></span></div><div class="tx"><span class="tt">9:14 PM</span><span class="ti"><span class="en">A new enquiry hits your site</span><span class="de">Eine neue Anfrage landet auf Ihrer Website</span></span><span class="td"><span class="en">After hours, nobody on the sales floor.</span><span class="de">Nach Feierabend, niemand im Vertrieb.</span></span></div></li>
+            <li><div class="mk"><span class="dot"></span><span class="seg"><span class="segfill"></span></span></div><div class="tx"><span class="tt">9:15 PM</span><span class="ti"><span class="en">Agents qualify it and reply</span><span class="de">Agenten qualifizieren und antworten</span></span><span class="td"><span class="en">Enriched, scored, and written to the CRM.</span><span class="de">Angereichert, bewertet und ins CRM geschrieben.</span></span></div></li>
+            <li><div class="mk"><span class="dot"></span><span class="seg"><span class="segfill"></span></span></div><div class="tx"><span class="tt">9:22 PM</span><span class="ti"><span class="en">He answers. Agents step back.</span><span class="de">Er antwortet. Die Agenten treten zurück.</span></span><span class="td"><span class="en">Your rep is alerted with the full thread.</span><span class="de">Ihr Vertriebler wird mit dem ganzen Verlauf informiert.</span></span></div></li>
+            <li><div class="mk"><span class="dot"></span></div><div class="tx"><span class="tt">9:05 AM</span><span class="ti"><span class="en">Your rep opens a booked meeting</span><span class="de">Ihr Vertriebler öffnet einen gebuchten Termin</span></span><span class="td"><span class="en">Everything overnight ran on its own.</span><span class="de">Alles über Nacht lief von allein.</span></span></div></li>
+          </ol>
+        </div>
+        <div class="lad-right">
+          <div class="phone">
+            <span class="ear"></span>
+            <div class="screen">
+              <div class="sc-head"><span class="biz">Meridian Industrial</span><span class="chan"><span class="en">SMS · handled by Genworq</span><span class="de">SMS · von Genworq bearbeitet</span></span></div>
+              <div class="chat" id="lad-chat" aria-live="polite">
+                <span class="msg biz-msg"><span class="en">Hi Daniel, thanks for your enquiry. I can hold Thursday 10:00 for a walkthrough. Want me to book it?</span><span class="de">Hallo Daniel, danke für Ihre Anfrage. Ich kann Donnerstag 10:00 Uhr für eine Demo reservieren. Soll ich buchen?</span></span>
+                <span class="msg note"><span class="en">✉️ Email sent · pricing + case study</span><span class="de">✉️ E-Mail gesendet · Preise + Fallstudie</span></span>
+                <span class="msg pill">LEAD SCORED → CRM</span>
+                <span class="msg cust"><span class="en">Thursday 10:00 works. Book it.</span><span class="de">Donnerstag 10:00 passt. Buchen.</span></span>
+                <span class="msg note"><span class="en">⚡ Automation stopped · rep alerted</span><span class="de">⚡ Automatisierung gestoppt · Vertrieb informiert</span></span>
+              </div>
+            </div>
+            <span class="home"></span>
+          </div>
+        </div>
+        <button type="button" class="lad-toggle" id="lad-toggle" aria-label="Play automation demo"><svg class="ic-play" viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5L4 2.5z" fill="currentColor"/></svg><svg class="ic-pause" viewBox="0 0 16 16"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/></svg></button>
+      </div>
+      <div class="lad-foot"><span class="lad-clock"><span id="lad-clock">0:00</span> / 8:34</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section class="trust" id="trust">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="kicker"><span class="en">Designed for serious operations</span><span class="de">Gemacht für ernsthafte Operationen</span></span>
+      <h2><span class="en">Powerful autonomy. Visible control.</span><span class="de">Starke Autonomie. Sichtbare Kontrolle.</span></h2>
+      <p class="lead"><span class="en">Genworq is engineered to help teams deploy agentic systems with confidence, not black boxes.</span><span class="de">Genworq ist dafür gebaut, dass Teams agentische Systeme mit Vertrauen einsetzen, keine Blackboxen.</span></p>
+    </div>
+    <div class="trust-grid">
+      <article class="tcard reveal"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg><h3><span class="en">Human checkpoints</span><span class="de">Menschliche Kontrollpunkte</span></h3><p><span class="en">Set clear approval points for strategic, sensitive, or irreversible actions.</span><span class="de">Klare Freigabepunkte für strategische, sensible oder unumkehrbare Schritte.</span></p></article>
+      <article class="tcard reveal"><svg viewBox="0 0 24 24"><path d="M4 19h16M4 15h10M4 11h16M4 7h8"/></svg><h3><span class="en">Decision trails</span><span class="de">Entscheidungspfade</span></h3><p><span class="en">Understand what agents used, why they decided, and where work moved next.</span><span class="de">Nachvollziehen, was Agenten genutzt haben, warum sie entschieden haben und wohin die Arbeit ging.</span></p></article>
+      <article class="tcard reveal"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><h3><span class="en">Guardrails by design</span><span class="de">Leitplanken ab Werk</span></h3><p><span class="en">Define policy, access, and operational constraints before agents take action.</span><span class="de">Richtlinien, Zugriffe und operative Grenzen festlegen, bevor Agenten handeln.</span></p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final reveal">
+  <div class="wrap center">
+    <span class="kicker on-dark"><span class="en">Ready to make work flow</span><span class="de">Bereit, Arbeit fließen zu lassen</span></span>
+    <h2><span class="en">Your next team member isn’t one person. It’s a system.</span><span class="de">Ihr nächstes Teammitglied ist keine Person. Es ist ein System.</span></h2>
+    <p class="lead"><span class="en">Start with one workflow. Scale into an agent-powered operating model.</span><span class="de">Mit einem Workflow starten. Zu einem agentengetriebenen Betriebsmodell skalieren.</span></p>
+    <a class="btn btn-grad" href="#contact"><span class="en">Start a Genworq pilot</span><span class="de">Genworq-Pilot starten</span> <i>→</i></a>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact">
+  <div class="wrap two">
+    <div class="copy">
+      <span class="kicker"><span class="en">Get in touch</span><span class="de">Kontakt</span></span>
+      <h2><span class="en">Let’s map your first workflow.</span><span class="de">Lassen Sie uns Ihren ersten Workflow skizzieren.</span></h2>
+      <p class="lead"><span class="en">Tell us where the manual work piles up. We’ll come back with the one process worth automating first.</span><span class="de">Sagen Sie uns, wo sich die Handarbeit stapelt. Wir kommen mit dem einen Prozess zurück, der sich zuerst lohnt.</span></p>
+      <form class="form" id="form" novalidate>
+        <div class="row">
+          <label><span><span class="en">Name</span><span class="de">Name</span></span><input name="name" type="text" required autocomplete="name" data-ph-en="Jane Smith" data-ph-de="Max Mustermann"></label>
+          <label><span><span class="en">Company</span><span class="de">Firma</span></span><input name="company" type="text" autocomplete="organization" data-ph-en="Acme Logistics" data-ph-de="Muster Logistik"></label>
+        </div>
+        <label><span><span class="en">Work email</span><span class="de">Geschäftliche E-Mail</span></span><input name="email" type="email" required autocomplete="email" data-ph-en="jane@company.com" data-ph-de="max@firma.de"></label>
+        <label><span><span class="en">What should run itself?</span><span class="de">Was soll von selbst laufen?</span></span><textarea name="msg" rows="4" data-ph-en="We re-key every order from email into our ERP…" data-ph-de="Wir tippen jede Bestellung aus E-Mails ins ERP ab…"></textarea></label>
+        <button class="btn btn-grad wide" type="submit"><span class="en">Send message</span><span class="de">Nachricht senden</span></button>
+        <p class="success" role="status" aria-live="polite" hidden><span class="en">Thanks. Your message is ready in your email app. We reply within one business day.</span><span class="de">Danke. Ihre Nachricht liegt in Ihrem E-Mail-Programm bereit. Wir antworten innerhalb eines Werktags.</span></p>
+      </form>
+    </div>
+    <aside class="ccard reveal">
+      <h3><span class="en">Talk to the team</span><span class="de">Mit dem Team sprechen</span></h3>
+      <p><span class="en">Every enquiry reaches an operator, not a queue. Expect a reply within one business day.</span><span class="de">Jede Anfrage erreicht einen Menschen, keine Warteschlange. Antwort innerhalb eines Werktags.</span></p>
+      <div class="crow"><span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><small><span class="en">Email</span><span class="de">E-Mail</span></small><a href="mailto:hello@genworq.com">hello@genworq.com</a></div></div>
+      <div class="crow"><span class="ci"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><div><small><span class="en">Prefer to talk</span><span class="de">Lieber sprechen</span></small><b><span class="en">Book a 20-minute slot</span><span class="de">20-Minuten-Termin buchen</span></b></div></div>
+      <a class="btn btn-ink" href="mailto:hello@genworq.com?subject=Schedule%20an%20appointment"><span class="en">Schedule an appointment</span><span class="de">Termin vereinbaren</span></a>
+    </aside>
+  </div>
+</section>
+</div><!-- /page -->
+</main>
+
+<footer class="foot">
+  <div class="wrap"><span class="fbrand">GENWORQ</span><span class="ftag"><span class="en">Agentic AI for operational momentum.</span><span class="de">Agentische KI für operativen Schwung.</span></span></div>
+</footer>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
