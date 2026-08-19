@@ -78,7 +78,7 @@ function updateCaptions(p) {
     let op = smoothstep(p, B.a, B.a + f) * (1 - smoothstep(p, B.b - f, B.b));
     if (i === 0) op = 1 - smoothstep(p, B.b - f, B.b);
     if (i === bands.length - 1) op = smoothstep(p, B.a, B.a + f);
-    let k = clamp((p - B.a) / (B.ramp || Math.min(0.09, (B.b - B.a) * 0.42)), 0, 1);
+    let k = clamp((p - B.a) / (B.ramp || Math.min(SMALL ? 0.14 : 0.09, (B.b - B.a) * (SMALL ? 0.62 : 0.42))), 0, 1);
     if (i === 0) k = Math.max(k, loadK);
     if (Math.abs(op - B.op) > 0.004 || (op === 0) !== (B.op === 0)) { B.op = op; B.el.style.opacity = op.toFixed(3); }
     if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) { B.k = k; B.el.style.setProperty('--k', k.toFixed(3)); }
@@ -88,7 +88,7 @@ function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now -
 let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
 function tick(now) {
   const dt = Math.min(100, now - (lastTick || now)); lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.12 : 0.16), dt / 16.667));
+  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.075 : 0.16), dt / 16.667));
   if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; } else rafId = requestAnimationFrame(tick);
   requestSeek(shown * video.duration); updateCaptions(shown);
 }

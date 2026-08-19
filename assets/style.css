@@ -129,13 +129,15 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .w{display:inline-block;white-space:nowrap;will-change:transform,opacity;backface-visibility:hidden}
 .c{display:inline-block}
 /* entrances are word-level, unhurried: each word takes ~45% of the band's ramp, overlapping the next; it rises, un-blurs and settles (ease-out) */
-.w{--kc:clamp(0,(var(--k,0) - var(--th,0))*2.2,1);--ke:calc(var(--kc)*(2 - var(--kc)))}
+.w{--kc:clamp(0,(var(--k,0) - var(--th,0))*var(--spd,2.2),1);--ke:calc(var(--kc)*(2 - var(--kc)))}
 [data-ent="rise"] .w{opacity:var(--ke);transform:translate3d(0,calc((1 - var(--ke))*30px),0);filter:blur(calc((1 - var(--ke))*8px))}
 [data-ent="drift-l"] .w{opacity:var(--ke);transform:translate3d(calc((1 - var(--ke))*-22px),calc((1 - var(--ke))*10px),0);filter:blur(calc((1 - var(--ke))*8px))}
 [data-ent="settle"] .w{opacity:var(--ke);transform:translate3d(0,calc((1 - var(--ke))*24px),0) scale(calc(.97 + .03*var(--ke)));filter:blur(calc((1 - var(--ke))*6px))}
 /* phones: no per-word blur (expensive), lighter shadow, contain paint work to the band */
 @media (max-width:720px){
-  [data-ent] .w{filter:none}
+  .w{--spd:1.7} /* each word takes ~60% of the ramp: slower, more overlap */
+  [data-ent="rise"] .w,[data-ent="drift-l"] .w{filter:blur(calc((1 - var(--ke))*4px))}
+  [data-ent="settle"] .w{filter:blur(calc((1 - var(--ke))*3px))}
   .band{text-shadow:0 1px 2px rgba(3,10,16,.9),0 4px 16px rgba(3,10,16,.7);contain:layout paint}
 }
 [data-ent="settle"]{--ks:clamp(0,(var(--k,0) - .62)*4,1);--kb:clamp(0,(var(--k,0) - .76)*5,1)}
@@ -157,7 +159,7 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 @media (max-height:560px){.cue,.ring{display:none}}
 /* scrub hero on phones: shorter scroll track, captions sized for narrow screens, scrims widened */
 @media (max-width:720px){
-  .hero{height:420vh;height:420svh}
+  .hero{height:600vh;height:600svh} /* long track: captions unfold over several thumb-scrolls */
   .band-1{padding-top:20vh}
   .band-1 h1{font-size:clamp(2.1rem,9.6vw,3rem);max-width:12ch;margin-top:14px}
   .band-left{padding-top:24vh}
