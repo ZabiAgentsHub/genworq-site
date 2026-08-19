@@ -1,4 +1,4 @@
-/* Genworq: scroll-scrubbed hero + ported Framer interactions. Plain JS, no deps. */
+﻿/* Genworq: scroll-scrubbed hero + ported Framer interactions. Plain JS, no deps. */
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -204,6 +204,33 @@ setLang(lang);
   new IntersectionObserver(([en]) => { if (en.isIntersecting) { if (!started) { started = true; play(); } else if (playing && elapsed < RUNTIME) play(); } else if (playing) { stop(); } }, { threshold: 0.5 }).observe(root);
 })();
 
+
+/* ---------- stack ticker: flows, and the chip nearest the center lights up ---------- */
+(() => {
+  const list = $('#stacklist'), vp = $('#stackvp'); if (!list || !vp) return;
+  const TOOLS = [['Slack','#4A154B','S'],['HubSpot','#FF7A59','H'],['Microsoft 365','#D83B01','M'],['Supabase','#3ECF8E','S'],['n8n','#EA4B71','n'],['Salesforce','#00A1E0','S'],['Notion','#111111','N'],['Google Workspace','#4285F4','G'],['Zapier','#FF4F00','Z'],['Stripe','#635BFF','S'],['WhatsApp','#25D366','W'],['Gmail','#EA4335','G'],['Shopify','#96BF48','S'],['Pipedrive','#1A1A1A','P']];
+  const frag = document.createDocumentFragment();
+  const mk = (t, clone) => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = `<span class="mk" aria-hidden="true"></span><span class="nm"></span>`; li.querySelector('.mk').textContent = t[2]; li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); return li; };
+  const plus = clone => { const li = document.createElement('li'); li.className = 'plus'; li.innerHTML = `<span class="mk" aria-hidden="true">+</span><span class="nm"><span class="en">your stack</span><span class="de">Ihr Stack</span></span>`; if (clone) li.setAttribute('aria-hidden', 'true'); return li; };
+  [false, true].forEach(clone => { TOOLS.forEach(t => frag.appendChild(mk(t, clone))); frag.appendChild(plus(clone)); });
+  list.appendChild(frag);
+  const items = $$('li', list); let on = false, raf = null, hot = null;
+  function loop() {
+    if (!on) { raf = null; return; }
+    const r = vp.getBoundingClientRect(); const cx = r.left + r.width / 2; let best = null, bd = 1e9;
+    for (const li of items) {
+      const b = li.getBoundingClientRect(); if (b.right < r.left - 50 || b.left > r.right + 50) continue;
+      const d = Math.abs(b.left + b.width / 2 - cx); const t = clamp(1 - d / (r.width * 0.36), 0, 1);
+      const s = (1 + t * t * 0.22).toFixed(3), o = (0.62 + t * 0.38).toFixed(3);
+      if (li._s !== s) { li._s = s; li.style.setProperty('--s', s); }
+      if (li._o !== o) { li._o = o; li.style.setProperty('--o', o); }
+      if (d < bd) { bd = d; best = li; }
+    }
+    if (best !== hot) { if (hot) hot.classList.remove('hot'); hot = best; if (hot) hot.classList.add('hot'); }
+    raf = requestAnimationFrame(loop);
+  }
+  new IntersectionObserver(([e]) => { on = e.isIntersecting && !RM.matches; if (on && raf === null) raf = requestAnimationFrame(loop); }, { threshold: 0 }).observe(vp);
+})();
 /* ---------- form: mailto ---------- */
 const form = $('#form');
 form.addEventListener('submit', e => {
