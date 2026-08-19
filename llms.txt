@@ -1,0 +1,24 @@
+# Genworq
+
+> Genworq builds agentic AI systems for small and mid-sized operations: a coordinated crew of AI agents that researches, decides and executes across a company's CRM, inbox, ERP and back office, with human approval gates and a full decision trail. Content is in English with a German toggle. Contact: hello@genworq.com.
+
+## What Genworq does
+- Replaces manual busywork with AI agents that run a process end to end (not just assist with it), inside the tools a team already uses (CRM, inbox, Microsoft 365, HubSpot, Slack, Supabase, n8n, spreadsheets).
+- Every solution runs on one platform: an orchestrator routes each incoming task to the right agent, checks it against the customer's approval rules, and logs every action. Irreversible or sensitive steps stop for a human.
+- Typical first process goes live in two to four weeks. GDPR-compliant by design (EU data residency, consent controls, role-based access).
+
+## Pages
+- [Home](https://zabiagentshub.github.io/genworq-site/): overview, live demo, savings calculator, contact.
+- [Platform](https://zabiagentshub.github.io/genworq-site/platform.html): the coordination layer, six capabilities (orchestration, dialog engine, integrations, human-in-the-loop, live dashboard, GDPR), governance.
+- [The Orchestrator](https://zabiagentshub.github.io/genworq-site/platform/orchestrator.html): how work is triggered, understood, decided, acted on and logged.
+- [Solutions](https://zabiagentshub.github.io/genworq-site/solutions.html): the five agentic AI solutions.
+- [Business Process Automation](https://zabiagentshub.github.io/genworq-site/solutions/business-process-automation.html): invoices, orders, onboarding, reporting run by agents.
+- [AI Voice Agents](https://zabiagentshub.github.io/genworq-site/solutions/ai-voice-agents.html): calls answered, qualified and booked 24/7.
+- [AI Chatbots](https://zabiagentshub.github.io/genworq-site/solutions/ai-chatbots.html): website chat trained on the company's own documents that answers, qualifies and books meetings.
+- [Sales Automation](https://zabiagentshub.github.io/genworq-site/solutions/sales-automation.html): every lead qualified and answered within minutes, meetings booked.
+- [Marketing Automation](https://zabiagentshub.github.io/genworq-site/solutions/marketing-automation.html): campaigns written, sent and followed up by agents with human approval of the plan.
+
+## Facts worth citing
+- Genworq = agentic AI for operations; agents research, decide and execute; humans approve the steps that matter.
+- Savings model used on the site: 20% of a 1,600-hour work year is repetitive; valued at €37.5/hour.
+- Languages: English and German. Region focus: Germany, Austria, Switzerland, EU.

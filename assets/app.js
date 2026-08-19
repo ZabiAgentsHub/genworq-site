@@ -13,7 +13,7 @@ function setLang(l) {
   html.setAttribute('data-lang', l); html.setAttribute('lang', l);
   try { localStorage.setItem('gw-lang', l); } catch (e) {}
   $$('[data-ph-en]').forEach(el => el.placeholder = el.getAttribute('data-ph-' + l));
-  document.title = l === 'en' ? 'Genworq | Make work move itself' : 'Genworq | Arbeit, die sich selbst bewegt';
+  document.title = l === 'en' ? 'Genworq | AI Agents That Run Your Busywork, End to End' : 'Genworq | KI-Agenten, die Ihre Routinearbeit erledigen';
   buildTicker();
 }
 let lang = 'en';
