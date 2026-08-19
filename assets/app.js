@@ -50,7 +50,7 @@ function splitSpan(span, mode, seed) {
   const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
   words.forEach((wd, wi) => {
     const w = document.createElement('span'); w.className = 'w';
-    w.style.setProperty('--th', (wi / words.length * 0.5 + r() * 0.05).toFixed(3));
+    w.style.setProperty('--th', (wi / words.length * 0.58 + r() * 0.03).toFixed(3));
     if (mode === 'chars') {
       [...wd].forEach(ch => { const c = document.createElement('span'); c.className = 'c'; c.textContent = ch; c.style.setProperty('--th', (ci / total * 0.55 + r() * 0.06).toFixed(3)); c.style.setProperty('--jx', (-(10 + r() * 14)).toFixed(1) + 'px'); w.appendChild(c); ci++; });
     } else w.textContent = wd;
@@ -66,7 +66,7 @@ const hero = $('#hero'), stage = $('#stage'), video = $('#hero-video'), poster =
 const SMALL = matchMedia('(max-width: 720px)').matches;
 const VIDEO_URL = SMALL ? 'assets/hero-scrub-m.mp4' : 'assets/hero-scrub.mp4', VIDEO_BYTES = SMALL ? 2320657 : 7718298;
 const bands = $$('.band').map(b => ({ el: b, a: +b.dataset.a, b: +b.dataset.b, op: -1, k: -1, ramp: b.dataset.ramp ? +b.dataset.ramp : null }));
-function heroProgress() { const range = hero.offsetHeight - innerHeight; return range > 0 ? clamp(-hero.getBoundingClientRect().top / range, 0, 1) : 0; }
+function heroProgress() { const range = hero.offsetHeight - stage.offsetHeight; return range > 0 ? clamp(-hero.getBoundingClientRect().top / range, 0, 1) : 0; }
 let seekBusy = false, pendingTime = null;
 function requestSeek(t) { if (!video.duration) return; if (seekBusy) { pendingTime = t; return; } seekBusy = true; video.currentTime = t; }
 video.addEventListener('seeked', () => { seekBusy = false; if (pendingTime !== null) { const t = pendingTime; pendingTime = null; requestSeek(t); } });
@@ -74,21 +74,21 @@ video.addEventListener('error', () => { seekBusy = false; pendingTime = null; fa
 let loadK = 0, loadStart = 0;
 function updateCaptions(p) {
   for (let i = 0; i < bands.length; i++) {
-    const B = bands[i]; const f = Math.min(0.02, (B.b - B.a) / 3);
+    const B = bands[i]; const f = Math.min(0.035, (B.b - B.a) / 3);
     let op = smoothstep(p, B.a, B.a + f) * (1 - smoothstep(p, B.b - f, B.b));
     if (i === 0) op = 1 - smoothstep(p, B.b - f, B.b);
     if (i === bands.length - 1) op = smoothstep(p, B.a, B.a + f);
-    let k = clamp((p - B.a) / (B.ramp || Math.min(0.025, (B.b - B.a) * 0.35)), 0, 1);
+    let k = clamp((p - B.a) / (B.ramp || Math.min(0.09, (B.b - B.a) * 0.42)), 0, 1);
     if (i === 0) k = Math.max(k, loadK);
     if (Math.abs(op - B.op) > 0.004 || (op === 0) !== (B.op === 0)) { B.op = op; B.el.style.opacity = op.toFixed(3); }
     if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) { B.k = k; B.el.style.setProperty('--k', k.toFixed(3)); }
   }
 }
-function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart - 300) / 1400, 0, 1); loadK = t * t * (3 - 2 * t); updateCaptions(shown); if (t < 1) requestAnimationFrame(loadRamp); }
+function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart - 450) / 2600, 0, 1); loadK = t * t * (3 - 2 * t); updateCaptions(shown); if (t < 1) requestAnimationFrame(loadRamp); }
 let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
 function tick(now) {
   const dt = Math.min(100, now - (lastTick || now)); lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - 0.16, dt / 16.667));
+  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.12 : 0.16), dt / 16.667));
   if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; } else rafId = requestAnimationFrame(tick);
   requestSeek(shown * video.duration); updateCaptions(shown);
 }
