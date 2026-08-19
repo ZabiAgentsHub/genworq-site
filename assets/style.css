@@ -458,7 +458,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 
 /* ================= CTA BAND: image background + scroll reveal ================= */
 .final.cta-band{position:relative;overflow:hidden;min-height:560px;display:flex;align-items:center;justify-content:center;padding:96px 24px;isolation:isolate;background:#080C12}
-.cta-band__img{position:absolute;inset:0;background-image:url("android-hero.jpg");background-size:cover;background-position:right center;transform:scale(1.05);transition:transform .6s ease;z-index:-2}
+.cta-band__img{position:absolute;inset:0;background-image:url("genworq-android.png");background-size:cover;background-position:right center;transform:scale(1.05);transition:transform .6s ease;z-index:-2}
 .cta-band__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,12,18,.88) 0%,rgba(8,12,18,.72) 45%,rgba(8,12,18,.25) 100%);z-index:-1}
 .cta-band__content{max-width:760px;text-align:center;color:#F3F6FA;display:flex;flex-direction:column;align-items:center;gap:22px;opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s ease}
 .cta-band__content.is-visible{opacity:1;transform:none}
@@ -467,5 +467,7 @@ body.paused *,body.paused *::before,body.paused *::after{animation-play-state:pa
 .final.cta-band:hover .cta-band__img{transform:scale(1.1)}
 @media (max-width:600px){.final.cta-band{min-height:440px;padding:72px 20px}.cta-band__scrim{background:linear-gradient(90deg,rgba(8,12,18,.9) 0%,rgba(8,12,18,.82) 60%,rgba(8,12,18,.55) 100%)}}
 @media (prefers-reduced-motion:reduce){.cta-band__content{opacity:1;transform:none;transition:none}.cta-band__img{transition:none}.final.cta-band:hover .cta-band__img{transform:scale(1.05)}}
-.cta-band__img{inset:0 0 0 24%;background-position:center}@media (max-width:900px){.cta-band__img{inset:0 0 0 10%}}@media (max-width:600px){.cta-band__img{inset:0;background-position:65% center}}
-.cta-band__img{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 22%);mask-image:linear-gradient(90deg,transparent 0,#000 22%)}
+.cta-band__img{inset:0;background-position:right center}@media (max-width:600px){.cta-band__img{background-position:72% center}}
+
+.cta-band__img{background-color:#0A1317;background-size:auto 112%;background-position:right center;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 30%);mask-image:linear-gradient(90deg,transparent 0,#000 30%)}@media (max-width:900px){.cta-band__img{background-size:cover;background-position:70% center}}
+.cta-band__img{background-repeat:no-repeat}
