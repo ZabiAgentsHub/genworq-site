@@ -39,9 +39,10 @@ if (RM.matches) $$('.reveal').forEach(el => el.classList.add('in'));
 /* toolkit ticker (same engine as the home strip) */
 (() => {
   const list = $('#stacklist'), vp = $('#stackvp'); if (!list || !vp) return;
-  const TOOLS = [['n8n', '#EA4B71', 'n'], ['Python', '#3776AB', 'Py'], ['OpenAI', '#10A37F', 'O'], ['Docker', '#2496ED', 'D'], ['AWS', '#FF9900', 'A'], ['Supabase', '#3ECF8E', 'S'], ['Microsoft 365', '#D83B01', 'M'], ['Slack', '#4A154B', 'S'], ['HubSpot', '#FF7A59', 'H'], ['Sheets', '#0F9D58', 'G']];
+  const ROOT = (document.querySelector('script[src$="pages.js"]') || {}).src ? document.querySelector('script[src$="pages.js"]').getAttribute('src').replace('assets/pages.js', '') : '';
+  const TOOLS = [['n8n', '#EA4B71', 'n8n'], ['Python', '#3776AB', 'python'], ['OpenAI', '#10A37F', 'openai'], ['Docker', '#2496ED', 'docker'], ['AWS', '#FF9900', 'aws'], ['Supabase', '#3ECF8E', 'supabase'], ['Microsoft 365', '#D83B01', 'microsoft365'], ['Slack', '#4A154B', 'slack'], ['HubSpot', '#FF7A59', 'hubspot'], ['Google Sheets', '#0F9D58', 'googlesheets']];
   const frag = document.createDocumentFragment();
-  [false, true].forEach(clone => TOOLS.forEach(t => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = '<span class="mk" aria-hidden="true"></span><span class="nm"></span>'; li.querySelector('.mk').textContent = t[2]; li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); frag.appendChild(li); }));
+  [false, true].forEach(clone => TOOLS.forEach(t => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = '<span class="mk" aria-hidden="true"></span><span class="nm"></span>'; li.style.setProperty('--logo', `url(logos/${t[2]}.svg)`); li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); frag.appendChild(li); }));
   list.appendChild(frag);
   const items = $$('li', list); let on = false, raf = null, hot = null;
   function loop() {

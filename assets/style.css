@@ -190,11 +190,14 @@ section{position:relative}
 .stack-viewport:hover .stack-list{animation-play-state:paused}
 @keyframes stk{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .stack-list li{flex:0 0 auto;display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:#1B3A50;background:#fff;border:1px solid var(--border);border-radius:100px;padding:9px 16px 9px 10px;box-shadow:0 3px 10px rgba(9,47,74,.05);transform:scale(var(--s,1));opacity:var(--o,.7);will-change:transform;transition:box-shadow .3s}
-.stack-list li .mk{width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;letter-spacing:0;background:var(--c,#2E85FF);box-shadow:0 0 0 0 var(--c);flex:none}
+.stack-list li .mk{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:none;background:#F1F7FA;position:relative;transition:background .3s}
+.stack-list li .mk::before{content:"";display:block;width:16px;height:16px;background:var(--ink-2);-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat;transition:background .3s}
+.stack-list li.hot .mk{background:color-mix(in srgb,var(--c) 12%,#fff)}
+.stack-list li.hot .mk::before{background:var(--c)}
 .stack-list li.hot{box-shadow:0 10px 30px -10px color-mix(in srgb,var(--c) 55%,transparent),0 0 0 1.5px var(--c);color:var(--ink)}
-.stack-list li.hot .mk{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+.stack-list li.hot .mk{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 18%,transparent)}
 .stack-list li.plus{background:transparent;border-style:dashed;color:#315670}
-.stack-list li.plus .mk{background:#CFE3EC;color:#315670}
+.stack-list li.plus .mk{background:#E3EEF3;color:#315670;font-weight:700;font-size:16px;line-height:1}.stack-list li.plus .mk::before{display:none}
 @media (prefers-reduced-motion:reduce){.stack-list{animation:none;flex-wrap:wrap;width:auto;justify-content:center}.stack-list li{--s:1;--o:1}}
 
 /* capabilities */

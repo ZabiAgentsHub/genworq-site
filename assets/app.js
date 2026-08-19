@@ -260,9 +260,9 @@ setLang(lang);
 /* ---------- stack ticker: flows, and the chip nearest the center lights up ---------- */
 (() => {
   const list = $('#stacklist'), vp = $('#stackvp'); if (!list || !vp) return;
-  const TOOLS = [['Slack','#4A154B','S'],['HubSpot','#FF7A59','H'],['Microsoft 365','#D83B01','M'],['Supabase','#3ECF8E','S'],['n8n','#EA4B71','n'],['Salesforce','#00A1E0','S'],['Notion','#111111','N'],['Google Workspace','#4285F4','G'],['Zapier','#FF4F00','Z'],['Stripe','#635BFF','S'],['WhatsApp','#25D366','W'],['Gmail','#EA4335','G'],['Shopify','#96BF48','S'],['Pipedrive','#1A1A1A','P']];
+  const TOOLS = [['Slack','#4A154B','slack'],['HubSpot','#FF7A59','hubspot'],['Microsoft 365','#D83B01','microsoft365'],['Gmail','#EA4335','gmail'],['Google Sheets','#0F9D58','googlesheets'],['Notion','#111111','notion'],['Supabase','#3ECF8E','supabase'],['n8n','#EA4B71','n8n'],['Salesforce','#00A1E0','salesforce'],['Zapier','#FF4F00','zapier'],['Stripe','#635BFF','stripe'],['WhatsApp','#25D366','whatsapp'],['Shopify','#96BF48','shopify'],['Google Workspace','#4285F4','google']];
   const frag = document.createDocumentFragment();
-  const mk = (t, clone) => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = `<span class="mk" aria-hidden="true"></span><span class="nm"></span>`; li.querySelector('.mk').textContent = t[2]; li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); return li; };
+  const mk = (t, clone) => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = `<span class="mk" aria-hidden="true"></span><span class="nm"></span>`; li.style.setProperty('--logo', `url(logos/${t[2]}.svg)`); li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); return li; };
   const plus = clone => { const li = document.createElement('li'); li.className = 'plus'; li.innerHTML = `<span class="mk" aria-hidden="true">+</span><span class="nm"><span class="en">your stack</span><span class="de">Ihr Stack</span></span>`; if (clone) li.setAttribute('aria-hidden', 'true'); return li; };
   [false, true].forEach(clone => { TOOLS.forEach(t => frag.appendChild(mk(t, clone))); frag.appendChild(plus(clone)); });
   list.appendChild(frag);
