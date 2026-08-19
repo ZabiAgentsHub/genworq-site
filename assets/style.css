@@ -142,6 +142,10 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
   .band,.ring,.cue,#hero-video,.poster{display:none}
   .static-hero{display:flex}
 }
+/* mobile motion: the strands video loops muted under the static hero text (JS adds .mobile-motion once it's actually playing; until then the still frame shows) */
+.stage.mobile-motion #hero-video{display:block;opacity:1;transition:opacity .8s var(--ease)}
+.stage.mobile-motion .static-hero{background:linear-gradient(180deg,rgba(5,10,16,.7),rgba(5,10,16,.32) 55%,rgba(5,10,16,.6))}
+@media (prefers-reduced-motion:reduce){.stage.mobile-motion #hero-video{display:none}}
 @media (max-height:560px){.cue,.ring{display:none}}
 
 /* ============ PAGE ============ */
