@@ -136,7 +136,8 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .static-hero h1{font-size:clamp(2.2rem,9vw,3.4rem);max-width:12ch;color:#F7FBFF}
 .static-hero .sub{color:#C9DBEA;max-width:38ch;font-size:1.02rem}
 .static-hero .btn{align-self:flex-start;text-shadow:none;margin-top:8px}
-@media (max-width:720px),(orientation:portrait) and (max-width:1024px),(orientation:portrait) and (pointer:coarse),(orientation:landscape) and (pointer:coarse) and (max-height:560px),(prefers-reduced-motion:reduce){
+/* static-hero gates: must match GATES in app.js exactly */
+@media (orientation:landscape) and (pointer:coarse) and (max-height:560px),(prefers-reduced-motion:reduce){
   .hero{height:auto}
   .stage{position:relative;height:100svh;min-height:560px;background:#081019 url("hero-ending.jpg") center/cover no-repeat}
   .band,.ring,.cue,#hero-video,.poster{display:none}
@@ -147,6 +148,20 @@ html[data-lang="en"] .lang [data-l="en"],html[data-lang="de"] .lang [data-l="de"
 .stage.mobile-motion .static-hero{background:linear-gradient(180deg,rgba(5,10,16,.7),rgba(5,10,16,.32) 55%,rgba(5,10,16,.6))}
 @media (prefers-reduced-motion:reduce){.stage.mobile-motion #hero-video{display:none}}
 @media (max-height:560px){.cue,.ring{display:none}}
+/* scrub hero on phones: shorter scroll track, captions sized for narrow screens, scrims widened */
+@media (max-width:720px){
+  .hero{height:420vh}
+  .band-1{padding-top:20vh}
+  .band-1 h1{font-size:clamp(2.1rem,9.6vw,3rem);max-width:12ch;margin-top:14px}
+  .band-left{padding-top:24vh}
+  .band .line{font-size:clamp(1.45rem,7vw,2.1rem);max-width:16ch}
+  .band-1::before,.band-left::before{background:radial-gradient(ellipse 120% 64% at 30% 40%,rgba(5,10,16,.9) 0%,rgba(5,10,16,.66) 48%,rgba(5,10,16,0) 82%)}
+  .settle{padding-top:12vh}
+  .settle h2{font-size:clamp(1.9rem,8.6vw,2.6rem)}
+  .settle .sub{margin-top:28px;font-size:1rem}
+  .settle::before{background:radial-gradient(ellipse 130% 60% at 50% 30%,rgba(5,10,16,.78) 0%,rgba(5,10,16,.5) 50%,rgba(5,10,16,0) 82%)}
+  .eyebrow{font-size:12px;letter-spacing:.14em}
+}
 
 /* ============ PAGE ============ */
 .page{position:relative;z-index:2;background:var(--canvas)}

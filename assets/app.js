@@ -115,8 +115,10 @@ async function loadHeroBlob() {
   }
   clearTimeout(watchdog); ring.style.setProperty('--ld', 0);
   blobUrl = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' })); if (mobileMotion) return; video.src = blobUrl; video.load();
-  video.addEventListener('canplay', () => { requestSeek(heroProgress() * video.duration); stage.classList.add('video-ready'); }, { once: true });
+  video.addEventListener('canplay', () => { primeVideo(); requestSeek(heroProgress() * video.duration); stage.classList.add('video-ready'); }, { once: true });
 }
+/* iOS Safari won't decode frames for currentTime seeks until the element has played once; a muted play()+pause() unlocks it */
+function primeVideo() { if (mobileMotion) return; const p = video.play(); if (p && p.then) p.then(() => { if (!mobileMotion) video.pause(); }).catch(() => {}); }
 function failVideo() {
   if (stage.classList.contains('video-failed')) return;
   const chev = document.createElement('div'); chev.className = 'chev'; chev.setAttribute('aria-hidden', 'true'); chev.textContent = '↓';
@@ -124,7 +126,8 @@ function failVideo() {
   poster.style.backgroundImage = "url('assets/hero-ending.jpg')";
   bands.forEach(B => { B.op = -1; B.k = -1; }); updateCaptions(heroProgress());
 }
-const GATES = ['(max-width: 720px)', '(orientation: portrait) and (max-width: 1024px)', '(orientation: portrait) and (pointer: coarse)', '(orientation: landscape) and (pointer: coarse) and (max-height: 560px)', '(prefers-reduced-motion: reduce)'];
+/* static-hero gates (must match the CSS media query exactly). Phones/tablets in portrait now run the scrub; only short landscape phones and reduced-motion get the static/looping fallback. */
+const GATES = ['(orientation: landscape) and (pointer: coarse) and (max-height: 560px)', '(prefers-reduced-motion: reduce)'];
 let scrubOn = false;
 function enableScrub() { if (scrubOn) return; scrubOn = true; initHeroOnce(); addEventListener('scroll', onScroll, { passive: true }); bands.forEach(B => { B.op = -1; B.k = -1; }); updateCaptions(heroProgress()); onScroll(); }
 function disableScrub() { if (!scrubOn) return; scrubOn = false; removeEventListener('scroll', onScroll); if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
