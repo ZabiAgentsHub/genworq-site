@@ -173,3 +173,76 @@ body.paused .eh-mock *{animation-play-state:paused!important}
 .eband-scrim{position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(7,21,35,.55) 0%,rgba(7,21,35,.72) 55%,rgba(7,21,35,.9) 100%)}
 .eband .wrap{position:relative}
 @media (prefers-reduced-motion:reduce){.eband-img{transition:none}}
+
+/* ===========================================================================
+   PAGE NUANCE. Same family as the rest of the site (type, grid, cards, nav,
+   motion), different ground and accent: warm paper instead of canvas-white,
+   mint green instead of aqua-blue. The e-commerce world is parcels, receipts
+   and the green "order confirmed" tick. Scoped to body.ecom.
+   =========================================================================== */
+.ecom{
+  --ec-paper:#FAF6EF;      /* warm off-white ground */
+  --ec-paper-2:#F3EEE4;    /* deeper paper, section alternation */
+  --ec-mint:#0E8F6B;       /* accent for icons, kickers, links */
+  --ec-mint-2:#2FE3B0;     /* bright end of the gradient */
+  --ec-mint-soft:#E6F6EF;  /* tints for icon discs and chips */
+  --ec-grad:linear-gradient(135deg,#2FE3B0 0%,#0E8F6B 100%);
+  --ec-ink-dark:#05161A;   /* dark sections lean teal, not navy */
+}
+/* grounds */
+.ecom .ehero{background:var(--ec-paper)}
+.ecom .ehero::before{background:radial-gradient(60% 80% at 85% 30%,rgba(47,227,176,.16) 0%,transparent 70%)}
+.ecom .bdefstrip{background:#FFFDF9}
+.ecom .bsec.canvas{background:var(--ec-paper)}
+.ecom .bsec.mist{background:var(--ec-paper-2)}
+.ecom .proof.estack{background:#FFFDF9;border-color:#EADFCF}
+.ecom .faq{background:var(--ec-paper)}
+.ecom .bsec.dark{background:radial-gradient(120% 100% at 12% 0%,#0F3A34 0%,#082521 48%,var(--ec-ink-dark) 100%)}
+.ecom .bsec.dark .kicker{color:#7BE8C4}
+.ecom .bsec.dark .lead a{color:#9FF0D3;text-decoration-color:rgba(159,240,211,.4)}
+/* accent: gradient words, buttons, kickers, links */
+.ecom .bh em{background:var(--ec-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ecom .btn-grad{background:var(--ec-grad);color:#04120F;box-shadow:0 12px 30px -14px rgba(14,143,107,.7)}
+.ecom .kicker{color:var(--ec-mint)}
+.ecom .kicker.muted{color:#6E7F74}
+.ecom .kicker.on-dark{color:#7BE8C4}
+.ecom .beye{color:var(--ec-mint)}
+.ecom .ehero .beye::before{background:var(--ec-mint)}
+.ecom .bmore,.ecom .ehero .bcrumb a:hover{color:var(--ec-mint)}
+.ecom .bdef{border-left-color:var(--ec-mint)}
+.ecom .rowtag{background:var(--ec-mint-soft);color:var(--ec-mint)}
+.ecom .step .checks li::before{background:var(--ec-mint)}
+.ecom .chips>span{background:#F4F1EA;color:#4F5E56;border:1px solid #EADFCF}
+.ecom .sgroup .chips span{background:#fff}
+.ecom .sgroup b{color:#5C6E66}
+.ecom .sgroup,.ecom .sgroup:last-child{border-color:#E3D9C9}
+/* cards and icon discs */
+.ecom .ucard,.ecom .acard,.ecom .scard{border-color:#EADFCF;box-shadow:0 18px 44px -34px rgba(60,45,20,.25)}
+.ecom .ucard:hover,.ecom .scard:hover{border-color:rgba(14,143,107,.45)}
+.ecom .uic,.ecom .acard i,.ecom .scard>i{background:var(--ec-mint-soft)}
+.ecom .uic svg,.ecom .acard svg,.ecom .scard>i svg{stroke:var(--ec-mint)}
+/* illustrations */
+.ecom .bart{background:#FFFDF9 radial-gradient(circle at 1px 1px,#E4DACB 1px,transparent 1.5px) 0 0/18px 18px;border-color:#EADFCF;box-shadow:0 30px 70px -46px rgba(60,45,20,.4)}
+.ecom .eb-a,.ecom .et-msg.a{background:var(--ec-grad);color:#04120F}
+.ecom .ec-ic,.ecom .es-ic.blue{background:var(--ec-mint-soft)}
+.ecom .ec-ic svg,.ecom .es-ic.blue svg{stroke:var(--ec-mint)}
+.ecom .ed-good{border-color:var(--ec-mint-2);box-shadow:0 18px 40px -20px rgba(47,227,176,.5)}
+.ecom .ed-good .ed-h{color:var(--ec-mint)}.ecom .ed-good .ed-h i{background:var(--ec-mint-2)}
+.ecom .ed-good .ed-msg{background:#EEF9F3}
+.ecom .ei-tag.w{background:var(--ec-mint-soft);color:var(--ec-mint)}
+.ecom .ei-tag.r{background:#EEF2FA;color:#3D5A99}
+/* orchestration */
+.ecom .agent{background:rgba(12,48,43,.72);border-color:rgba(123,232,196,.14)}
+.ecom .agent:hover{background:#114A41;border-color:rgba(47,227,176,.35)}
+.ecom .av-1{background:linear-gradient(135deg,#2FE3B0,#0E8F6B)}.ecom .av-2{background:linear-gradient(135deg,#15D4E8,#2E85FF)}.ecom .av-3{background:linear-gradient(135deg,#F4C430,#F58220)}
+.ecom .aknow{background:rgba(47,227,176,.07);border-color:rgba(47,227,176,.24)}
+.ecom .aknow i{background:rgba(47,227,176,.14)}.ecom .aknow svg{stroke:#7BE8C4}
+/* CTA band and FAQ */
+.ecom .eband{background:var(--ec-ink-dark)}
+.ecom .eband-scrim{background:linear-gradient(180deg,rgba(5,22,26,.5) 0%,rgba(5,22,26,.72) 55%,rgba(5,22,26,.92) 100%)}
+.ecom .eband .chips-dark span{background:rgba(12,48,43,.8);border:1px solid rgba(123,232,196,.18)}
+.ecom .eband .chips-dark span::before,.ecom .bmeta{color:#7C8C84}
+.ecom .eband .chips-dark span::before{background:#2FE3B0}
+.ecom .faq summary i::before,.ecom .faq summary i::after{background:var(--ec-mint)}
+.ecom .faq details{border-color:#E3D9C9}
+.ecom .freshness{color:#8A9A91}
