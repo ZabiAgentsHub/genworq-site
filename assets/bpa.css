@@ -31,38 +31,42 @@
    The section is taller than the viewport; the stage inside is sticky. JS maps scroll
    progress p (0..1) onto CSS custom properties. Without JS (or with reduced motion) the
    .scrub class is never added and the resting state is the finished one: copy visible. */
-.bhero{--navh:80px;position:relative;height:185vh;height:185svh;background:var(--canvas);color:var(--ink)}
+.bhero{--navh:80px;position:relative;height:185vh;height:185svh;background:#071523;color:#F2FAFF}
 .bh-stage{position:sticky;top:var(--navh,80px);height:calc(100vh - var(--navh,80px));height:calc(100svh - var(--navh,80px));overflow:hidden;isolation:isolate;
   --p:1;--soft:1;--scrim:1;--scale:1.04;--rest:0}
 .bh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:48% 55%;display:block}
-.bh-sharp img{width:100%;height:100%;object-fit:cover;object-position:48% 55%;display:block}
+.bh-sharp img,.bh-video{width:100%;height:100%;object-fit:cover;object-position:48% 55%;display:block}
+.bh-video{position:absolute;inset:0;opacity:0;transition:opacity 1.2s var(--ease);transform:scale(var(--scale));transform-origin:50% 60%}
+.bh-video.on{opacity:1}
 .bh-sharp{transform:scale(var(--scale));transform-origin:50% 60%;will-change:transform}
 .bh-soft{opacity:var(--soft);transform:scale(var(--scale));transform-origin:50% 60%;will-change:opacity,transform}
 .bh-scrim{position:absolute;inset:0;opacity:var(--scrim);background:
-  linear-gradient(180deg,rgba(245,249,252,0) 0%,rgba(245,249,252,.55) 42%,rgba(245,249,252,.94) 72%,var(--canvas) 100%),
-  linear-gradient(90deg,rgba(245,249,252,.55) 0%,rgba(245,249,252,0) 60%)}
+  linear-gradient(180deg,rgba(7,21,35,.08) 0%,rgba(7,21,35,.5) 42%,rgba(7,21,35,.86) 72%,#071523 100%),
+  linear-gradient(90deg,rgba(7,21,35,.62) 0%,rgba(7,21,35,0) 62%)}
+/* a permanent thin vignette so the resting photograph already feels anchored to the dark nav */
+.bh-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(7,21,35,.35) 0%,rgba(7,21,35,0) 22%,rgba(7,21,35,0) 70%,rgba(7,21,35,.55) 100%)}
 /* resting state: only the eyebrow and a cue sit on the photograph */
 .bh-rest{position:absolute;left:0;right:0;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;opacity:var(--rest);pointer-events:none}
-.bh-rest .beye{background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;color:#0E7490}
-.bh-cue{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#41637A;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;display:inline-flex;gap:8px;align-items:center}
+.bh-rest .beye{background:rgba(7,21,35,.55);border:1px solid rgba(125,180,220,.25);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;color:#9EE8FF}
+.bh-cue{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#D8EEF4;background:rgba(7,21,35,.55);border:1px solid rgba(125,180,220,.25);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;display:inline-flex;gap:8px;align-items:center}
 .bh-cue i{font-style:normal;animation:cue 1.8s ease-in-out infinite}
 @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 /* the copy: each child gets its own --t from JS (0..1) */
 .bh-copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:clamp(40px,7vh,72px);display:flex;flex-direction:column;gap:20px;pointer-events:none}
 .bh-copy>*{--t:1;opacity:var(--t);transform:translateY(calc((1 - var(--t)) * 44px));pointer-events:auto;will-change:opacity,transform}
-.bcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8AA0B2}
-.bcrumb a{color:#41637A;transition:color .3s}
-.bcrumb a:hover{color:#0E7490}
-.bcrumb span[aria-current]{color:var(--ink-2)}
+.bcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#7E9AB1}
+.bcrumb a{color:#9FC3D6;transition:color .3s}
+.bcrumb a:hover{color:var(--aqua)}
+.bcrumb span[aria-current]{color:#D8EEF4}
 .beye{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#0E7490;display:inline-flex;align-items:center;gap:10px}
-.bhero h1{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.04em;color:var(--ink);max-width:14ch;text-wrap:balance}
-.bhero .lead{color:var(--ink-2);font-size:clamp(16px,1.4vw,19px);line-height:1.6;max-width:46ch}
-.bhero .lead a{color:var(--ink);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(14,116,144,.4)}
+.bhero h1{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.04em;color:#F7FBFF;max-width:14ch;text-wrap:balance}
+.bhero .lead{color:#C4D8E8;font-size:clamp(16px,1.4vw,19px);line-height:1.6;max-width:46ch}
+.bhero .lead a{color:#F2FAFF;font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(21,212,232,.5)}
 .bacts{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-top:4px}
-.blink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--ink-2)}
+.blink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:#E9F4FC}
 .blink i{font-style:normal;transition:transform .3s var(--ease)}
 .blink:hover i{transform:translateY(3px)}
-.bmeta{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:#41637A;margin-top:2px}
+.bmeta{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:#8FB0C4;margin-top:2px}
 /* scrub on: JS owns the variables; start from the photograph */
 .bhero.scrub .bh-stage{--soft:0;--scrim:0;--scale:1;--rest:1}
 .bhero.scrub .bh-copy>*{--t:0}

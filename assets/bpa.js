@@ -40,6 +40,27 @@ const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   paint();
+
+  /* Ambient motion layer. The still is the LCP and is already painted; the mp4 is only
+     fetched on wide screens, after the page is idle, never on data-saver, and it pauses
+     once the copy has taken over (p > .6) so it costs nothing further down the page. */
+  const vid = $('.bh-video', hero);
+  const conn = navigator.connection || {};
+  if (vid && matchMedia('(min-width: 900px)').matches && !conn.saveData && !/2g/.test(conn.effectiveType || '')) {
+    const start = () => {
+      vid.src = vid.dataset.src;
+      vid.addEventListener('canplay', () => { vid.classList.add('on'); vid.play().catch(() => {}); }, { once: true });
+      vid.load();
+      let playing = true;
+      addEventListener('scroll', () => {
+        const r = hero.getBoundingClientRect();
+        const past = (nav0 - r.top) / Math.max(1, r.height - (window.innerHeight - nav0)) > .6;
+        if (past && playing) { vid.pause(); playing = false; } else if (!past && !playing) { vid.play().catch(() => {}); playing = true; }
+      }, { passive: true });
+    };
+    const nav0 = parseFloat(getComputedStyle(document.body).paddingTop) || 80;
+    ('requestIdleCallback' in window) ? requestIdleCallback(start, { timeout: 2500 }) : setTimeout(start, 1200);
+  }
 })();
 
 /* ---------- rollout timeline: spine fill + active node ---------- */
