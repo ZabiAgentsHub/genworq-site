@@ -27,57 +27,62 @@
 .bmore i{font-style:normal;transition:transform .3s var(--ease)}
 .bmore:hover i{transform:translateX(4px)}
 
-/* ============ 1 . HERO: light, editorial, one photograph ============ */
-.bhero{background:var(--canvas);color:var(--ink);padding:136px 0 0;overflow:hidden;position:relative}
-.bhero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border)}
-.bhero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding-bottom:72px}
-.bhero-copy{display:flex;flex-direction:column;gap:22px;min-width:0;padding-top:8px}
+/* ============ 1 . HERO: full-bleed photograph, copy arrives with scroll ============
+   The section is taller than the viewport; the stage inside is sticky. JS maps scroll
+   progress p (0..1) onto CSS custom properties. Without JS (or with reduced motion) the
+   .scrub class is never added and the resting state is the finished one: copy visible. */
+.bhero{--navh:80px;position:relative;height:185vh;height:185svh;background:var(--canvas);color:var(--ink)}
+.bh-stage{position:sticky;top:var(--navh,80px);height:calc(100vh - var(--navh,80px));height:calc(100svh - var(--navh,80px));overflow:hidden;isolation:isolate;
+  --p:1;--soft:1;--scrim:1;--scale:1.04;--rest:0}
+.bh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:48% 55%;display:block}
+.bh-sharp img{width:100%;height:100%;object-fit:cover;object-position:48% 55%;display:block}
+.bh-sharp{transform:scale(var(--scale));transform-origin:50% 60%;will-change:transform}
+.bh-soft{opacity:var(--soft);transform:scale(var(--scale));transform-origin:50% 60%;will-change:opacity,transform}
+.bh-scrim{position:absolute;inset:0;opacity:var(--scrim);background:
+  linear-gradient(180deg,rgba(245,249,252,0) 0%,rgba(245,249,252,.55) 42%,rgba(245,249,252,.94) 72%,var(--canvas) 100%),
+  linear-gradient(90deg,rgba(245,249,252,.55) 0%,rgba(245,249,252,0) 60%)}
+/* resting state: only the eyebrow and a cue sit on the photograph */
+.bh-rest{position:absolute;left:0;right:0;bottom:40px;display:flex;justify-content:space-between;align-items:flex-end;opacity:var(--rest);pointer-events:none}
+.bh-rest .beye{background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;color:#0E7490}
+.bh-cue{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#41637A;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);padding:10px 14px;border-radius:100px;display:inline-flex;gap:8px;align-items:center}
+.bh-cue i{font-style:normal;animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+/* the copy: each child gets its own --t from JS (0..1) */
+.bh-copy{position:absolute;left:0;right:0;bottom:0;padding-bottom:clamp(40px,7vh,72px);display:flex;flex-direction:column;gap:20px;pointer-events:none}
+.bh-copy>*{--t:1;opacity:var(--t);transform:translateY(calc((1 - var(--t)) * 44px));pointer-events:auto;will-change:opacity,transform}
 .bcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8AA0B2}
 .bcrumb a{color:#41637A;transition:color .3s}
 .bcrumb a:hover{color:#0E7490}
 .bcrumb span[aria-current]{color:var(--ink-2)}
 .beye{font-family:var(--font-mono);font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#0E7490;display:inline-flex;align-items:center;gap:10px}
-.beye::before{content:"";width:22px;height:2px;background:#0E7490;border-radius:2px}
-.bhero h1{font-size:clamp(36px,4.6vw,58px);line-height:1.02;letter-spacing:-.04em;color:var(--ink);max-width:13ch;text-wrap:balance}
-.bhero .lead{color:var(--muted);font-size:18px;line-height:1.6;max-width:46ch}
-.bhero .lead a{color:var(--ink-2);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(14,116,144,.4)}
+.bhero h1{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.04em;color:var(--ink);max-width:14ch;text-wrap:balance}
+.bhero .lead{color:var(--ink-2);font-size:clamp(16px,1.4vw,19px);line-height:1.6;max-width:46ch}
+.bhero .lead a{color:var(--ink);font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(14,116,144,.4)}
 .bacts{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-top:4px}
 .blink{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;color:var(--ink-2)}
 .blink i{font-style:normal;transition:transform .3s var(--ease)}
 .blink:hover i{transform:translateY(3px)}
-.bmeta{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:#7E97A8;margin-top:6px}
-
-/* the photograph, and the hover: paper blurs, the finished result sharpens */
-.bhero-fig{position:relative;margin:0;height:clamp(420px,44vw,600px);border-radius:26px;overflow:hidden;background:#E6EEF3;box-shadow:0 40px 90px -50px rgba(9,47,74,.5);isolation:isolate}
-.bhero-fig picture,.bhero-fig img{display:block;width:100%;height:100%}
-.bhero-fig img{object-fit:cover;object-position:62% 50%;transform:scale(1.02);filter:blur(0) saturate(1);transition:filter .9s var(--ease),transform 1.2s var(--ease)}
-.bhero-card{position:absolute;left:26px;bottom:26px;display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #DCEAF0;border-radius:16px;padding:13px 18px 13px 14px;box-shadow:0 22px 50px -22px rgba(9,47,74,.45);font-family:var(--font-body);transition:transform .9s var(--ease),box-shadow .9s var(--ease)}
-.bhero-card i{width:30px;height:30px;border-radius:50%;background:var(--good-soft);display:grid;place-items:center;font-style:normal;flex:none}
-.bhero-card svg{width:14px;height:14px;fill:none;stroke:var(--good);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-.bhero-card b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
-.bhero-card small{display:block;font-size:12px;color:#5F7A8E;margin-top:2px}
-@media (hover:hover){
-  .bhero:hover .bhero-fig img{filter:blur(7px) saturate(.85);transform:scale(1.06)}
-  .bhero:hover .bhero-card{transform:translateY(-6px) scale(1.04);box-shadow:0 34px 70px -24px rgba(9,47,74,.55)}
+.bmeta{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;color:#41637A;margin-top:2px}
+/* scrub on: JS owns the variables; start from the photograph */
+.bhero.scrub .bh-stage{--soft:0;--scrim:0;--scale:1;--rest:1}
+.bhero.scrub .bh-copy>*{--t:0}
+@media (max-width:980px){
+  .bhero{height:170vh;height:170svh}
+  .bhero h1{max-width:15ch}
+  .bh-rest{bottom:28px}
+  .bh-copy{gap:16px}
 }
+@media (max-width:520px){
+  .bh-img,.bh-sharp img{object-position:62% 55%}
+  .bh-rest .beye{font-size:11px;padding:9px 12px}
+  .bacts{gap:14px}
+}
+@media (prefers-reduced-motion:reduce){.bh-cue i{animation:none}}
 
 /* definition strip: the AEO definition stays in the first 100 words, off the hero */
 .bdefstrip{background:#fff;border-bottom:1px solid var(--border);padding:26px 0}
 .bdef{color:var(--muted-2);font-size:15px;line-height:1.65;border-left:2px solid var(--aqua);padding:2px 0 2px 18px;max-width:84ch}
 .bdef b{color:var(--ink);font-weight:600}
-
-@media (max-width:980px){
-  .bhero{padding-top:112px}
-  .bhero .wrap{grid-template-columns:1fr;gap:40px;padding-bottom:56px}
-  .bhero h1{max-width:16ch}
-  .bhero-fig{height:clamp(340px,70vw,520px)}
-}
-@media (max-width:520px){
-  .bhero-fig{height:360px;border-radius:20px}
-  .bhero-card{left:14px;bottom:14px;right:14px;padding:11px 14px 11px 12px}
-  .bacts{gap:14px}
-}
-@media (prefers-reduced-motion:reduce){.bhero-fig img,.bhero-card{transition:none}.bhero:hover .bhero-fig img{filter:none;transform:scale(1.02)}}
 
 /* ============ 3 . PROBLEM GRID ============ */
 .probs{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:14px}

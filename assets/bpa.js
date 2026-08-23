@@ -8,14 +8,38 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const RM = matchMedia('(prefers-reduced-motion: reduce)');
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
-/* ---------- console clock ---------- */
+/* ---------- hero: scroll drives the photograph → copy hand-over ----------
+   p = how far the sticky stage has been scrolled (0 at the top, 1 when the section
+   releases). The sharp photograph is the resting state; a pre-blurred copy fades in
+   over it and a light scrim rises, while the copy lines arrive one after another. */
 (() => {
-  const el = $('#bc-clock'); if (!el) return;
-  const tick = () => {
-    const d = new Date();
-    el.textContent = String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0') + ' · LIVE';
+  const hero = $('#hero'), stage = $('.bh-stage', hero || document); if (!hero || !stage || RM.matches) return;
+  const lines = $$('.bh-copy > *', hero);
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const span = (p, a, b) => ease(clamp((p - a) / (b - a), 0, 1));
+  hero.classList.add('scrub');
+  let ticking = false;
+  const paint = () => {
+    ticking = false;
+    const r = hero.getBoundingClientRect();
+    const nav = parseFloat(getComputedStyle(document.body).paddingTop) || 80; // fixed nav height
+    hero.style.setProperty('--navh', nav + 'px');
+    const travel = Math.max(1, r.height - (window.innerHeight - nav));
+    const p = clamp((nav - r.top) / travel, 0, 1);
+    const s = stage.style;
+    s.setProperty('--soft', span(p, .08, .55).toFixed(3));
+    s.setProperty('--scrim', span(p, .10, .60).toFixed(3));
+    s.setProperty('--scale', (1 + span(p, 0, 1) * .06).toFixed(4));
+    s.setProperty('--rest', (1 - span(p, 0, .22)).toFixed(3));
+    lines.forEach((el, i) => {
+      const a = .22 + i * .09;
+      el.style.setProperty('--t', span(p, a, a + .28).toFixed(3));
+    });
   };
-  tick(); setInterval(tick, 30000);
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(paint); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  paint();
 })();
 
 /* ---------- rollout timeline: spine fill + active node ---------- */
