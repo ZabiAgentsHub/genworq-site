@@ -17,6 +17,7 @@
 - [AI Chatbots](https://zabiagentshub.github.io/genworq-site/solutions/ai-chatbots.html): website chat trained on the company's own documents that answers, qualifies and books meetings.
 - [Sales Automation](https://zabiagentshub.github.io/genworq-site/solutions/sales-automation.html): every lead qualified and answered within minutes, meetings booked.
 - [Marketing Automation](https://zabiagentshub.github.io/genworq-site/solutions/marketing-automation.html): campaigns written, sent and followed up by agents with human approval of the plan.
+- [E-commerce Service Automation](https://zabiagentshub.github.io/genworq-site/solutions/ecommerce-automation.html): what e-commerce customer service automation is, which shop requests can be fully automated (order status, returns, cancellations, product advice, phone orders), how agents authenticate customers, shop-stack integrations, GDPR.
 
 ## Facts worth citing
 - Genworq = agentic AI for operations; agents research, decide and execute; humans approve the steps that matter.

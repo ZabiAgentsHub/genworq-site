@@ -41,7 +41,12 @@ if (RM.matches) $$('.reveal').forEach(el => el.classList.add('in'));
   const list = $('#stacklist'), vp = $('#stackvp'); if (!list || !vp) return;
   /* NB: --logo is consumed by a mask rule inside assets/style.css, so the relative URL
      resolves against that stylesheet's folder (assets/), not against the page. */
-  const TOOLS = [['n8n', '#EA4B71', 'n8n'], ['Python', '#3776AB', 'python'], ['OpenAI', '#10A37F', 'openai'], ['Docker', '#2496ED', 'docker'], ['AWS', '#FF9900', 'aws'], ['Supabase', '#3ECF8E', 'supabase'], ['Microsoft 365', '#D83B01', 'microsoft365'], ['Slack', '#4A154B', 'slack'], ['HubSpot', '#FF7A59', 'hubspot'], ['Google Sheets', '#0F9D58', 'googlesheets']];
+  const SETS = {
+    toolkit: [['n8n', '#EA4B71', 'n8n'], ['Python', '#3776AB', 'python'], ['OpenAI', '#10A37F', 'openai'], ['Docker', '#2496ED', 'docker'], ['AWS', '#FF9900', 'aws'], ['Supabase', '#3ECF8E', 'supabase'], ['Microsoft 365', '#D83B01', 'microsoft365'], ['Slack', '#4A154B', 'slack'], ['HubSpot', '#FF7A59', 'hubspot'], ['Google Sheets', '#0F9D58', 'googlesheets']],
+    /* the e-commerce page: shop systems, payments, carriers, helpdesk, messaging */
+    shop: [['Shopify', '#7AB55C', 'shopify'], ['Shopware', '#189EFF', 'shopware'], ['WooCommerce', '#96588A', 'woocommerce'], ['Klarna', '#FFB3C7', 'klarna'], ['PayPal', '#003087', 'paypal'], ['Stripe', '#635BFF', 'stripe'], ['DHL', '#FFCC00', 'dhl'], ['Zendesk', '#03363D', 'zendesk'], ['HubSpot', '#FF7A59', 'hubspot'], ['WhatsApp', '#25D366', 'whatsapp'], ['Gmail', '#EA4335', 'gmail'], ['Google Sheets', '#0F9D58', 'googlesheets']],
+  };
+  const TOOLS = SETS[list.dataset.tools] || SETS.toolkit;
   const frag = document.createDocumentFragment();
   [false, true].forEach(clone => TOOLS.forEach(t => { const li = document.createElement('li'); li.style.setProperty('--c', t[1]); li.innerHTML = '<span class="mk" aria-hidden="true"></span><span class="nm"></span>'; li.style.setProperty('--logo', `url(logos/${t[2]}.svg)`); li.querySelector('.nm').textContent = t[0]; if (clone) li.setAttribute('aria-hidden', 'true'); frag.appendChild(li); }));
   list.appendChild(frag);
