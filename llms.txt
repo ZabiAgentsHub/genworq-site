@@ -12,7 +12,7 @@
 - [Platform](https://zabiagentshub.github.io/genworq-site/platform.html): the coordination layer, six capabilities (orchestration, dialog engine, integrations, human-in-the-loop, live dashboard, GDPR), governance.
 - [The Orchestrator](https://zabiagentshub.github.io/genworq-site/platform/orchestrator.html): how work is triggered, understood, decided, acted on and logged.
 - [Solutions](https://zabiagentshub.github.io/genworq-site/solutions.html): the five agentic AI solutions.
-- [Business Process Automation](https://zabiagentshub.github.io/genworq-site/solutions/business-process-automation.html): invoices, orders, onboarding, reporting run by agents.
+- [Business Process Automation](https://zabiagentshub.github.io/genworq-site/solutions/business-process-automation.html): what business process automation is, how it differs from RPA, the five-step rollout, costs and GDPR. Orders, invoicing, onboarding and procurement run end to end by AI agents.
 - [AI Voice Agents](https://zabiagentshub.github.io/genworq-site/solutions/ai-voice-agents.html): calls answered, qualified and booked 24/7.
 - [AI Chatbots](https://zabiagentshub.github.io/genworq-site/solutions/ai-chatbots.html): website chat trained on the company's own documents that answers, qualifies and books meetings.
 - [Sales Automation](https://zabiagentshub.github.io/genworq-site/solutions/sales-automation.html): every lead qualified and answered within minutes, meetings booked.
