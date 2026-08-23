@@ -246,3 +246,58 @@ body.paused .eh-mock *{animation-play-state:paused!important}
 .ecom .faq summary i::before,.ecom .faq summary i::after{background:var(--ec-mint)}
 .ecom .faq details{border-color:#E3D9C9}
 .ecom .freshness{color:#8A9A91}
+
+/* ===========================================================================
+   LAYERS. Quiet backgrounds that give sections depth without competing:
+   soft colour fields, a fine grid, a route line. All decorative, all behind.
+   =========================================================================== */
+/* hero: two colour fields, a dotted grid on the right, a faint delivery route behind the mock */
+.ecom .ehero::before{background:
+  radial-gradient(55% 70% at 88% 22%,rgba(47,227,176,.18) 0%,transparent 70%),
+  radial-gradient(40% 50% at 8% 95%,rgba(217,138,18,.12) 0%,transparent 70%)}
+.ecom .ehero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 1px 1px,rgba(14,143,107,.22) 1px,transparent 1.5px) 0 0/22px 22px;
+  -webkit-mask-image:radial-gradient(60% 70% at 78% 50%,#000 0%,transparent 75%);mask-image:radial-gradient(60% 70% at 78% 50%,#000 0%,transparent 75%)}
+.ecom .ehero .wrap{z-index:1}
+.eh-route{position:absolute;right:-2%;top:8%;width:58%;height:auto;pointer-events:none;z-index:0;opacity:.9}
+.eh-route path{fill:none;stroke:#0E8F6B;stroke-width:1.5;stroke-dasharray:6 8;opacity:.35;animation:ehroute 40s linear infinite}
+.eh-route circle{fill:#FAF6EF;stroke:#0E8F6B;stroke-width:1.5;opacity:.55}
+@keyframes ehroute{to{stroke-dashoffset:-560}}
+.ecom .eh-mock{position:relative;z-index:1}
+@media (max-width:980px){.eh-route{display:none}}
+
+/* integration: colour-coded groups, brand marks in the chips, layered ground */
+.ecom #integrations{position:relative;overflow:hidden}
+.ecom #integrations::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(50% 60% at 100% 0%,rgba(47,227,176,.16) 0%,transparent 70%),
+  radial-gradient(45% 55% at 0% 100%,rgba(109,90,230,.10) 0%,transparent 70%),
+  radial-gradient(35% 40% at 50% 50%,rgba(217,138,18,.07) 0%,transparent 70%)}
+.ecom #integrations::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(135deg,rgba(14,143,107,.06) 0 1px,transparent 1px 14px);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 40%,#000 70%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 40%,#000 70%,transparent 100%)}
+.ecom #integrations .wrap{position:relative;z-index:1}
+.ecom .stackgrid{gap:12px}
+.ecom .sgroup{grid-template-columns:230px 1fr;align-items:center;gap:18px;padding:16px 18px;border:1px solid rgba(255,255,255,.7);border-radius:18px;background:rgba(255,253,249,.72);backdrop-filter:blur(6px);box-shadow:0 18px 44px -36px rgba(60,45,20,.35);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.ecom .sgroup:last-child{border-bottom:1px solid rgba(255,255,255,.7)}
+.ecom .sgroup:hover{transform:translateY(-2px);box-shadow:0 26px 54px -36px rgba(60,45,20,.45)}
+.sg-h{display:flex;align-items:center;gap:12px}
+.sg-h i{width:40px;height:40px;border-radius:12px;background:color-mix(in srgb,var(--g) 14%,#fff);display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--g) 25%,transparent)}
+.sg-h svg{width:20px;height:20px;fill:none;stroke:var(--g);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ecom .sg-h b{font-family:var(--font-body);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);padding:0}
+.sg-chips{display:flex;flex-wrap:wrap;gap:8px}
+.sg-chip{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#2B3A33;background:#fff;border:1px solid #E6DCCB;border-radius:100px;padding:6px 12px 6px 7px;transition:border-color .3s,box-shadow .3s,transform .3s var(--ease)}
+.sg-chip:hover{border-color:var(--c);box-shadow:0 8px 20px -12px color-mix(in srgb,var(--c) 60%,transparent);transform:translateY(-1px)}
+.sg-chip .mk{width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--c) 12%,#fff);display:inline-grid;place-items:center;position:relative;flex:none}
+.sg-chip .mk::before{content:"";width:13px;height:13px;background:var(--c);-webkit-mask:var(--logo) center/contain no-repeat;mask:var(--logo) center/contain no-repeat}
+.sg-chip .mk.dot::before{width:7px;height:7px;border-radius:50%;-webkit-mask:none;mask:none}
+@media (max-width:700px){.ecom .sgroup{grid-template-columns:1fr;gap:12px;padding:14px}}
+
+/* dark sections: a faint grid and a glow, so the teal isn't a flat slab */
+.ecom .bsec.dark{position:relative;overflow:hidden}
+.ecom .bsec.dark::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(123,232,196,.05) 1px,transparent 1px) 0 0/64px 64px,linear-gradient(90deg,rgba(123,232,196,.05) 1px,transparent 1px) 0 0/64px 64px;
+  -webkit-mask-image:radial-gradient(70% 70% at 70% 30%,#000 0%,transparent 80%);mask-image:radial-gradient(70% 70% at 70% 30%,#000 0%,transparent 80%)}
+.ecom .bsec.dark::after{content:"";position:absolute;width:60vw;height:60vw;max-width:900px;max-height:900px;right:-20vw;top:-30vw;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(47,227,176,.14) 0%,transparent 60%)}
+.ecom .bsec.dark .wrap{position:relative;z-index:1}
+/* CTA band: a mint glow over the photograph's lit aisle */
+.ecom .eband-scrim{background:linear-gradient(180deg,rgba(5,22,26,.5) 0%,rgba(5,22,26,.72) 55%,rgba(5,22,26,.92) 100%),radial-gradient(40% 50% at 50% 20%,rgba(47,227,176,.16) 0%,transparent 70%)}
