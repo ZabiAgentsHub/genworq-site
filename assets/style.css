@@ -938,3 +938,16 @@ body.dusk .ftag{color:#A08F72}
 body.dusk .hs-title{color:rgba(255,249,238,.93)}
 body.dusk .kicker.on-dark{color:#F5C98A}
 body.dusk .cta-band__img{filter:sepia(.28) hue-rotate(-12deg) saturate(1.06) brightness(.97)}
+
+/* hero title: word cascade + ambient halo + eyebrow shimmer */
+.title-split .hs-title{animation:hs-halo 5.5s ease-in-out 2s infinite alternate;opacity:1}
+.hs-title .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}
+.hs-title .w>span{display:inline-block;transform:translateY(112%);opacity:0;filter:blur(5px);animation:hs-word .95s var(--ease) both}
+@keyframes hs-word{60%{filter:blur(0)}to{transform:none;opacity:1;filter:blur(0)}}
+@keyframes hs-halo{from{text-shadow:0 2px 18px rgba(20,10,2,.7),0 1px 3px rgba(20,10,2,.55)}to{text-shadow:0 2px 18px rgba(20,10,2,.7),0 1px 3px rgba(20,10,2,.55),0 0 38px rgba(255,199,124,.4)}}
+.hs-eyebrow .en,.hs-eyebrow .de{background:linear-gradient(100deg,#F5C98A 0%,#F5C98A 42%,#FFF0D4 50%,#F5C98A 58%,#F5C98A 100%);background-size:230% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:hs-shimmer 6.5s ease-in-out 2.4s infinite}
+@keyframes hs-shimmer{0%{background-position:120% 0}38%,100%{background-position:-70% 0}}
+@media (prefers-reduced-motion:reduce){
+  .title-split .hs-title,.hs-title .w>span,.hs-eyebrow .en,.hs-eyebrow .de{animation:none}
+  .hs-title .w>span{transform:none;opacity:1;filter:none}
+}

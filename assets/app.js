@@ -55,6 +55,22 @@ document.addEventListener('visibilitychange', () => document.body.classList.togg
     vid.addEventListener('canplay', tryPlay, { once: true });
     vid.load(); tryPlay();
   }
+  /* headline: word-cascade entrance + ambient glow (JS enhancement over the CSS fade) */
+  const title = $('.hs-title', scene);
+  if (title && !RM.matches) {
+    $$(':scope > span', title).forEach(lang => {
+      const words = lang.textContent.trim().split(/\s+/);
+      lang.textContent = '';
+      words.forEach((wd, i) => {
+        const w = document.createElement('span'); w.className = 'w';
+        const inner = document.createElement('span'); inner.textContent = wd;
+        inner.style.animationDelay = (0.45 + i * 0.09) + 's';
+        w.appendChild(inner); lang.appendChild(w);
+        if (i < words.length - 1) lang.appendChild(document.createTextNode(' '));
+      });
+    });
+    scene.classList.add('title-split');
+  }
   if (RM.matches || !matchMedia('(hover:hover)').matches) return;
   let raf = null, tx = 0, ty = 0;
   scene.addEventListener('pointermove', e => {
