@@ -41,10 +41,20 @@ document.addEventListener('click', () => closeDD());
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDD(); });
 document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
 
-/* ---------- hero scene: pointer parallax (hover devices only) ---------- */
+/* ---------- hero scene: film loop + pointer parallax ---------- */
 (() => {
   const scene = $('#hero'); if (!scene) return;
   const art = $('.hs-art', scene); if (!art) return;
+  /* ambient film loop: desktop with motion allowed; phones, reduced-motion and data-saver keep the poster */
+  const vid = $('.hs-video', scene);
+  if (vid && !RM.matches && matchMedia('(min-width: 721px)').matches && !(navigator.connection && navigator.connection.saveData)) {
+    vid.muted = true;
+    vid.src = 'assets/hero-dusk.mp4';
+    vid.addEventListener('playing', () => scene.classList.add('video-on'), { once: true });
+    const tryPlay = () => { const p = vid.play(); if (p && p.catch) p.catch(() => {}); };
+    vid.addEventListener('canplay', tryPlay, { once: true });
+    vid.load(); tryPlay();
+  }
   if (RM.matches || !matchMedia('(hover:hover)').matches) return;
   let raf = null, tx = 0, ty = 0;
   scene.addEventListener('pointermove', e => {
