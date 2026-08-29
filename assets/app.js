@@ -1,4 +1,4 @@
-﻿/* Genworq: scroll-scrubbed hero + ported Framer interactions. Plain JS, no deps. */
+/* Genworq: ambient hero scene + ported Framer interactions. Plain JS, no deps. */
 (() => {
 'use strict';
 const $ = (s, r = document) => r.querySelector(s);
@@ -41,147 +41,20 @@ document.addEventListener('click', () => closeDD());
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDD(); });
 document.addEventListener('visibilitychange', () => document.body.classList.toggle('paused', document.hidden));
 
-/* ---------- split text (seeded) ---------- */
-function rng(seed) { let s = seed >>> 0; return () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296; }
-function splitSpan(span, mode, seed) {
-  const text = span.textContent.trim(); const r = rng(seed);
-  const words = text.split(/\s+/); const total = text.replace(/\s/g, '').length; let ci = 0;
-  const sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = text;
-  const vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
-  words.forEach((wd, wi) => {
-    const w = document.createElement('span'); w.className = 'w';
-    w.style.setProperty('--th', (wi / words.length * 0.58 + r() * 0.03).toFixed(3));
-    if (mode === 'chars') {
-      [...wd].forEach(ch => { const c = document.createElement('span'); c.className = 'c'; c.textContent = ch; c.style.setProperty('--th', (ci / total * 0.55 + r() * 0.06).toFixed(3)); c.style.setProperty('--jx', (-(10 + r() * 14)).toFixed(1) + 'px'); w.appendChild(c); ci++; });
-    } else w.textContent = wd;
-    vis.appendChild(w); if (wi < words.length - 1) vis.appendChild(document.createTextNode(' '));
+/* ---------- hero scene: pointer parallax (hover devices only) ---------- */
+(() => {
+  const scene = $('#hero'); if (!scene) return;
+  const art = $('.hs-art', scene); if (!art) return;
+  if (RM.matches || !matchMedia('(hover:hover)').matches) return;
+  let raf = null, tx = 0, ty = 0;
+  scene.addEventListener('pointermove', e => {
+    const r = scene.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - 0.5) * -18;
+    ty = ((e.clientY - r.top) / r.height - 0.5) * -10;
+    if (raf === null) raf = requestAnimationFrame(() => { raf = null; art.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(1.04)`; });
   });
-  span.textContent = ''; span.appendChild(sr); span.appendChild(vis);
-}
-$$('.hero .split').forEach((el, i) => { const ent = el.closest('.band').dataset.ent; const mode = 'words'; $$(':scope > .de, :scope > .en', el).forEach((s, j) => splitSpan(s, mode, 1000 + i * 10 + j)); });
-
-/* ---------- hero scrub ---------- */
-const hero = $('#hero'), stage = $('#stage'), video = $('#hero-video'), poster = $('#poster'), ring = $('.ring');
-/* all-intra encodes (every frame a keyframe) so scroll seeks land instantly; phones get the 960px cut */
-const SMALL = matchMedia('(max-width: 720px)').matches;
-const VIDEO_URL = SMALL ? 'assets/hero-scrub-m.mp4' : 'assets/hero-scrub.mp4', VIDEO_BYTES = SMALL ? 2320657 : 7718298;
-/* phones: draw a pre-extracted frame sequence to a canvas in the same rAF as the captions (no video seek latency -> frame and text stay locked) */
-const FRAMES_MODE = SMALL, FRAME_N = 73, FRAME_URL = i => 'assets/frames/f' + String(i + 1).padStart(3, '0') + '.webp';
-const frames = new Array(FRAME_N).fill(null); let framesLoaded = 0, framesReady = false, canvas = null, ctx = null, lastFrame = -1, cw = 0, ch = 0, anyFrame = false;
-function nearestLoaded(i) { if (frames[i]) return frames[i]; for (let d = 1; d < FRAME_N; d++) { if (frames[i - d]) return frames[i - d]; if (frames[i + d]) return frames[i + d]; } return null; }
-function drawFrame(i) {
-  if (!ctx || !anyFrame) return; i = clamp(Math.round(i), 0, FRAME_N - 1);
-  const img = nearestLoaded(i); if (!img) return;
-  const key = frames[i] ? i : -(i + 1000); // redraw when the exact frame arrives later
-  if (key === lastFrame) return; lastFrame = key;
-  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height; const sc = Math.max(cw / iw, ch / ih); const sw = cw / sc, sh = ch / sc;
-  ctx.drawImage(img, (iw - sw) / 2, (ih - sh) / 2, sw, sh, 0, 0, cw, ch);
-}
-function sizeCanvas() { if (!canvas) return; const dpr = Math.min(devicePixelRatio || 1, 1.5); const r = stage.getBoundingClientRect(); cw = Math.round(r.width * dpr); ch = Math.round(r.height * dpr); canvas.width = cw; canvas.height = ch; lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); }
-/* progressive, nearest-first: frames closest to the current scroll position download first, and the canvas shows as soon as one frame exists */
-function loadFrames() {
-  canvas = document.createElement('canvas'); canvas.id = 'hero-canvas'; canvas.setAttribute('aria-hidden', 'true'); video.after(canvas); ctx = canvas.getContext('2d', { alpha: false }); sizeCanvas();
-  addEventListener('resize', sizeCanvas); addEventListener('orientationchange', () => setTimeout(sizeCanvas, 300));
-  const pending = new Set(); for (let i = 0; i < FRAME_N; i++) pending.add(i);
-  let done = 0, failed = 0, inflight = 0; const CONC = 6;
-  const pick = () => { const cur = Math.round(shown * (FRAME_N - 1)); let best = -1, bd = 1e9; for (const i of pending) { const d = Math.abs(i - cur); if (d < bd) { bd = d; best = i; } } return best; };
-  const pump = () => { while (inflight < CONC && pending.size) { const i = pick(); pending.delete(i); inflight++; const img = new Image(); img.decoding = 'async';
-    img.onload = () => { frames[i] = img; done++; inflight--; framesLoaded = done; if (!anyFrame) { anyFrame = true; stage.classList.add('video-ready', 'frames'); } lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); ring.style.setProperty('--ld', Math.round(126 * (1 - done / FRAME_N))); if (done + failed === FRAME_N) finish(); else pump(); };
-    img.onerror = () => { failed++; inflight--; if (failed > FRAME_N * 0.15) failVideo(); else if (done + failed === FRAME_N) finish(); else pump(); };
-    img.src = FRAME_URL(i); } };
-  const finish = () => { if (framesReady) return; framesReady = true; ring.style.setProperty('--ld', 0); lastFrame = -1; drawFrame(shown * (FRAME_N - 1)); stage.classList.add('video-ready', 'frames'); };
-  pump();
-}
-const bands = $$('.band').map(b => ({ el: b, a: +b.dataset.a, b: +b.dataset.b, op: -1, k: -1, ramp: b.dataset.ramp ? +b.dataset.ramp : null }));
-function heroProgress() { const range = hero.offsetHeight - stage.offsetHeight; return range > 0 ? clamp(-hero.getBoundingClientRect().top / range, 0, 1) : 0; }
-let seekBusy = false, pendingTime = null;
-function requestSeek(t) { if (!video.duration) return; if (seekBusy) { pendingTime = t; return; } seekBusy = true; video.currentTime = t; }
-video.addEventListener('seeked', () => { seekBusy = false; if (pendingTime !== null) { const t = pendingTime; pendingTime = null; requestSeek(t); } });
-video.addEventListener('error', () => { seekBusy = false; pendingTime = null; failVideo(); });
-let loadK = 0, loadStart = 0;
-function updateCaptions(p) {
-  for (let i = 0; i < bands.length; i++) {
-    const B = bands[i]; const f = Math.min(0.035, (B.b - B.a) / 3);
-    let op = smoothstep(p, B.a, B.a + f) * (1 - smoothstep(p, B.b - f, B.b));
-    if (i === 0) op = 1 - smoothstep(p, B.b - f, B.b);
-    if (i === bands.length - 1) op = smoothstep(p, B.a, B.a + f);
-    let k = clamp((p - B.a) / (B.ramp || Math.min(SMALL ? 0.14 : 0.09, (B.b - B.a) * (SMALL ? 0.62 : 0.42))), 0, 1);
-    if (i === 0) k = Math.max(k, loadK);
-    if (Math.abs(op - B.op) > 0.004 || (op === 0) !== (B.op === 0)) { B.op = op; B.el.style.opacity = op.toFixed(3); }
-    if (Math.abs(k - B.k) > 0.008 || (k === 1 && B.k !== 1) || (k === 0 && B.k !== 0)) { B.k = k; B.el.style.setProperty('--k', k.toFixed(3)); }
-  }
-}
-function loadRamp(now) { if (!loadStart) loadStart = now; const t = clamp((now - loadStart - (SMALL ? 150 : 450)) / (SMALL ? 900 : 2600), 0, 1); loadK = t * t * (3 - 2 * t); updateCaptions(shown); if (t < 1) requestAnimationFrame(loadRamp); }
-let target = 0, shown = 0, rafId = null, lastTick = 0, heroOnScreen = true;
-function tick(now) {
-  const dt = Math.min(100, now - (lastTick || now)); lastTick = now;
-  shown += (target - shown) * (1 - Math.pow(1 - (SMALL ? 0.4 : 0.16), dt / 16.667));
-  if (Math.abs(target - shown) < 0.0005) { shown = target; rafId = null; lastTick = 0; } else rafId = requestAnimationFrame(tick);
-  if (FRAMES_MODE) drawFrame(shown * (FRAME_N - 1)); else requestSeek(shown * video.duration);
-  updateCaptions(shown);
-}
-function onScroll() { target = heroProgress(); if (rafId === null && heroOnScreen) rafId = requestAnimationFrame(tick); }
-new IntersectionObserver(([e]) => { heroOnScreen = e.isIntersecting; if (heroOnScreen) onScroll(); }, { threshold: 0 }).observe(hero);
-let heroInit = false, started = false, blobUrl = null;
-function initHeroOnce() {
-  if (heroInit) return; heroInit = true;
-  if (!FRAMES_MODE) poster.style.backgroundImage = "url('assets/hero-poster.jpg')";
-  if (FRAMES_MODE) startBlobFetch(); else { const img = new Image(); img.onload = startBlobFetch; img.onerror = startBlobFetch; img.src = 'assets/hero-poster.jpg'; setTimeout(startBlobFetch, 4000); }
-  requestAnimationFrame(loadRamp);
-}
-function startBlobFetch() { if (started) return; started = true; if (FRAMES_MODE) loadFrames(); else loadHeroBlob().catch(failVideo); }
-async function loadHeroBlob() {
-  const ctrl = new AbortController(); let watchdog = setTimeout(() => ctrl.abort(), 20000);
-  const res = await fetch(VIDEO_URL, { priority: 'low', signal: ctrl.signal });
-  if (!res.ok || !res.body) throw new Error('video fetch failed');
-  const total = Number(res.headers.get('Content-Length')) || VIDEO_BYTES;
-  const reader = res.body.getReader(); const chunks = []; let got = 0, lastRing = 0;
-  for (;;) {
-    const { done, value } = await reader.read(); if (done) break;
-    clearTimeout(watchdog); watchdog = setTimeout(() => ctrl.abort(), 20000);
-    chunks.push(value); got += value.length;
-    const frac = Math.min(1, got / total), now = performance.now();
-    if (now - lastRing > 100 || frac === 1) { lastRing = now; ring.style.setProperty('--ld', Math.round(126 * (1 - frac))); }
-  }
-  clearTimeout(watchdog); ring.style.setProperty('--ld', 0);
-  blobUrl = URL.createObjectURL(new Blob(chunks, { type: 'video/mp4' })); if (mobileMotion) return; video.src = blobUrl; video.load();
-  video.addEventListener('canplay', () => { primeVideo(); requestSeek(heroProgress() * video.duration); stage.classList.add('video-ready'); }, { once: true });
-}
-/* iOS Safari won't decode frames for currentTime seeks until the element has played once; a muted play()+pause() unlocks it */
-function primeVideo() { if (mobileMotion) return; const p = video.play(); if (p && p.then) p.then(() => { if (!mobileMotion) video.pause(); }).catch(() => {}); }
-function failVideo() {
-  if (stage.classList.contains('video-failed')) return;
-  const chev = document.createElement('div'); chev.className = 'chev'; chev.setAttribute('aria-hidden', 'true'); chev.textContent = '↓';
-  ring.replaceWith(chev); stage.classList.add('video-failed');
-  poster.style.backgroundImage = "url('assets/hero-ending.jpg')";
-  bands.forEach(B => { B.op = -1; B.k = -1; }); updateCaptions(heroProgress());
-}
-/* static-hero gates (must match the CSS media query exactly). Phones/tablets in portrait now run the scrub; only short landscape phones and reduced-motion get the static/looping fallback. */
-const GATES = ['(orientation: landscape) and (pointer: coarse) and (max-height: 560px)', '(prefers-reduced-motion: reduce)'];
-let scrubOn = false;
-function enableScrub() { if (scrubOn) return; scrubOn = true; initHeroOnce(); addEventListener('scroll', onScroll, { passive: true }); bands.forEach(B => { B.op = -1; B.k = -1; }); updateCaptions(heroProgress()); onScroll(); }
-function disableScrub() { if (!scrubOn) return; scrubOn = false; removeEventListener('scroll', onScroll); if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
-/* mobile / touch: scroll-scrubbing is unreliable on phones, so play the strands video as a muted looping background under the static hero */
-let mobileMotion = false;
-function enableMobileMotion() {
-  if (mobileMotion || RM.matches) return; mobileMotion = true; stage.classList.remove('frames');
-  video.pause(); video.removeAttribute('src'); video.load();
-  video.muted = true; video.loop = true; video.playsInline = true; video.autoplay = true; video.preload = 'auto';
-  video.src = VIDEO_URL;
-  const onPlaying = () => { if (mobileMotion) stage.classList.add('mobile-motion'); };
-  video.addEventListener('playing', onPlaying, { once: true });
-  video.play().catch(() => { /* autoplay blocked or failed: static image stays */ });
-}
-function disableMobileMotion() {
-  if (!mobileMotion) return; mobileMotion = false; if (framesReady) stage.classList.add('frames');
-  stage.classList.remove('mobile-motion'); video.pause(); video.loop = false; video.autoplay = false; video.removeAttribute('src'); video.load();
-  if (blobUrl) { video.src = blobUrl; video.load(); video.addEventListener('canplay', () => { requestSeek(heroProgress() * video.duration); stage.classList.add('video-ready'); }, { once: true }); }
-}
-function applyHeroMode() {
-  if (GATES.some(q => matchMedia(q).matches)) { disableScrub(); enableMobileMotion(); }
-  else { disableMobileMotion(); enableScrub(); }
-}
-const MQLS = GATES.map(q => matchMedia(q)); MQLS.forEach(m => m.addEventListener('change', applyHeroMode));
+  scene.addEventListener('pointerleave', () => { if (raf !== null) { cancelAnimationFrame(raf); raf = null; } art.style.transform = ''; });
+})();
 
 /* ---------- reveals ---------- */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
@@ -312,9 +185,8 @@ form.addEventListener('submit', e => {
   $('.success', form).hidden = false;
 });
 
-/* ---------- reduced motion, both directions ---------- */
-function pinToFinalStates() { disableScrub(); $$('.reveal').forEach(el => el.classList.add('in')); }
-RM.addEventListener('change', e => { if (e.matches) pinToFinalStates(); else applyHeroMode(); });
-applyHeroMode();
+/* ---------- reduced motion ---------- */
+function pinToFinalStates() { $$('.reveal').forEach(el => el.classList.add('in')); }
+RM.addEventListener('change', e => { if (e.matches) pinToFinalStates(); });
 if (RM.matches) pinToFinalStates();
 })();
